@@ -47,6 +47,8 @@
     },
     "devDependencies": {
         "@tailwindcss/postcss7-compat": "^2.0.3",
+        "@types/react-datepicker": "^3.1.5",
+        "@types/react-router-dom": "^5.1.7",
         "autoprefixer": "^9.8.6",
         "postcss": "^7.0.35",
         "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3"

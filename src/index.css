@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
+
+th {
+    @apply px-2 py-3 font-medium text-sm tracking-wider text-left text-gray-500 uppercase;
+}
+
+td {
+    @apply py-5 pl-2 font-semibold;
+}
+
+button:focus {
+    @apply border-ribbonBlue border-solid outline-none border;
+}
+
+input:focus {
+    @apply border-ribbonBlue border-solid outline-none border-2 rounded;
+}
+
 @tailwind utilities;
