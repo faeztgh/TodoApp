@@ -12,6 +12,7 @@ interface TodosProps {
     handleDateChange: HandleDateChange;
     handleTimeChange: HandleTimeChange;
     handleIsDone: HandleIsDone;
+    handleRemoveTodo: HandleRemoveTodo;
 }
 const Todos: FC<TodosProps> = (props) => {
     const {
@@ -21,6 +22,7 @@ const Todos: FC<TodosProps> = (props) => {
         handleEditTitle,
         handleDateChange,
         handleTimeChange,
+        handleRemoveTodo,
     } = props;
 
     const taskTitle = useRef<HTMLInputElement>(null);
@@ -110,7 +112,12 @@ const Todos: FC<TodosProps> = (props) => {
                                     >
                                         <FaPencilAlt size="1.2em" />
                                     </button>
-                                    <button className="text-carnationRed">
+                                    <button
+                                        className="text-carnationRed"
+                                        onClick={() =>
+                                            handleRemoveTodo(todo.id)
+                                        }
+                                    >
                                         <MdClose size="1.6em" />
                                     </button>
                                 </td>
