@@ -1,9 +1,10 @@
-import React, { FC, useRef } from "react";
+import React, { FC, useRef, useState } from "react";
 import { FaPencilAlt } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import "react-datepicker/dist/react-datepicker.css";
 import MyDatePicker from "../MyDatePicker";
 import MyTimePicker from "../MyTimePicker";
+import { BiDownArrow, BiUpArrow } from "react-icons/bi";
 
 interface TodosProps {
     todos: Array<Todo>;
@@ -13,6 +14,7 @@ interface TodosProps {
     handleTimeChange: HandleTimeChange;
     handleIsDone: HandleIsDone;
     handleRemoveTodo: HandleRemoveTodo;
+    handleSort: HandleSort;
 }
 const Todos: FC<TodosProps> = (props) => {
     const {
@@ -23,9 +25,15 @@ const Todos: FC<TodosProps> = (props) => {
         handleDateChange,
         handleTimeChange,
         handleRemoveTodo,
+        handleSort,
     } = props;
-
+    const [isAsc, setIsAsc] = useState(false);
     const taskTitle = useRef<HTMLInputElement>(null);
+
+    const sort = () => {
+        setIsAsc(!isAsc);
+        handleSort(isAsc, false);
+    };
 
     return (
         <>
@@ -34,9 +42,20 @@ const Todos: FC<TodosProps> = (props) => {
                     <tr>
                         <th></th>
 
-                        <th className="cursor-pointer">
+                        <th className="cursor-pointer" onClick={sort}>
                             <span className="flex px-3 py-1 font-semibold">
                                 Tasks
+                                {isAsc ? (
+                                    <BiDownArrow
+                                        className="mt-1 ml-2 text-gray-600"
+                                        size="1em"
+                                    />
+                                ) : (
+                                    <BiUpArrow
+                                        className="mt-1 ml-2 text-gray-600"
+                                        size="1em"
+                                    />
+                                )}
                             </span>
                         </th>
 
