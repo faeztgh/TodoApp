@@ -1,13 +1,20 @@
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
+import AddTask from "./AddTask";
 
-interface TabsProps {}
+interface TabsProps {
+    showModal: boolean;
+    setShowModal: (isOpen: boolean) => void;
+    handleAddNewTask: HandleAddNewTask;
+}
 
 const Tabs: FC<TabsProps> = (props) => {
-    const {} = props;
+    const { setShowModal, showModal, handleAddNewTask } = props;
+
     const [openTab, setOpenTab] = React.useState(1);
     const active = "text-ribbonBlue bg-white text-blue-dark";
     const deActive = "text-gray-400 bg-gray-100";
+
     return (
         <>
             <ul className="flex border-b h-11 list-reset">
@@ -44,6 +51,13 @@ const Tabs: FC<TabsProps> = (props) => {
                     >
                         Done Tasks
                     </Link>
+                </li>
+                <li className="flex ml-auto ">
+                    <AddTask
+                        setShowModal={setShowModal}
+                        showModal={showModal}
+                        handleAddNewTask={handleAddNewTask}
+                    />
                 </li>
             </ul>
         </>
