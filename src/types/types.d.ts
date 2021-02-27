@@ -19,3 +19,4 @@ type HandleAlert = () => void;
 type HandleAddNewTask = (todo) => void;
 
 type HandleRemoveTodo = (id: number) => void;
+type HandleSort = (isAsc: boolean, isDone: boolean) => void;
