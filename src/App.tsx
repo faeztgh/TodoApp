@@ -7,6 +7,7 @@ import { Data } from "./data/data";
 function App() {
     const [todos, setTodos] = useState<Todo[]>(Data);
     const [unDoneTodos, setUnDoneTodos] = useState<Todo[]>([]);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         setUnDoneTodos(todos.filter((todo) => !todo.isDone));
@@ -39,10 +40,22 @@ function App() {
         setTodos(newTodos);
     };
 
+    const handleAddNewTask: HandleAddNewTask = (task) => {
+        // specify the new task id
+        const id = todos.length === 0 ? 0 : todos[todos.length - 1].id + 1;
+        task = { id: id, ...task };
+        setTodos([...todos, task]);
+        console.log(task);
+    };
+
     return (
         <>
             <div className="m-16 lg:m-32 md:m-20">
-                <Tabs />
+                <Tabs
+                    handleAddNewTask={handleAddNewTask}
+                    setShowModal={setShowModal}
+                    showModal={showModal}
+                />
                 <Switch>
                     <Route
                         path="/"
