@@ -8,10 +8,20 @@ import MyTimePicker from "../MyTimePicker";
 interface TodosProps {
     todos: Array<Todo>;
     handleStatusChange: HandleStatusChange;
+    handleEditTitle: HandleEditTitle;
+    handleDateChange: HandleDateChange;
+    handleTimeChange: HandleTimeChange;
     handleIsDone: HandleIsDone;
 }
 const Todos: FC<TodosProps> = (props) => {
-    const { todos, handleStatusChange, handleIsDone } = props;
+    const {
+        todos,
+        handleStatusChange,
+        handleIsDone,
+        handleEditTitle,
+        handleDateChange,
+        handleTimeChange,
+    } = props;
 
     const taskTitle = useRef<HTMLInputElement>(null);
 
@@ -54,6 +64,12 @@ const Todos: FC<TodosProps> = (props) => {
                                         type="text"
                                         ref={taskTitle}
                                         defaultValue={todo.title}
+                                        onBlur={(e) =>
+                                            handleEditTitle(
+                                                e.target.value,
+                                                todo.id
+                                            )
+                                        }
                                     />
                                 </td>
                                 <td>
@@ -74,10 +90,16 @@ const Todos: FC<TodosProps> = (props) => {
                                     </button>
                                 </td>
                                 <td>
-                                    <MyDatePicker todo={todo} />
+                                    <MyDatePicker
+                                        todo={todo}
+                                        handleDateChange={handleDateChange}
+                                    />
                                 </td>
                                 <td>
-                                    <MyTimePicker todo={todo} />
+                                    <MyTimePicker
+                                        todo={todo}
+                                        handleTimeChange={handleTimeChange}
+                                    />
                                 </td>
                                 <td className="flex justify-around">
                                     <button

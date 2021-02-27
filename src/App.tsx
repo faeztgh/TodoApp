@@ -39,6 +39,49 @@ function App() {
         setTodos(newTodos);
     };
 
+       const handleEditTitle: HandleEditTitle = (newTitle, id) => {
+           const editedTodos = todos.map((todo) => {
+               if (todo.id === id) {
+                   if (todo.title !== newTitle) {
+                     
+
+                       return {
+                           ...todo,
+                           title: newTitle,
+                       };
+                   }
+               }
+               return todo;
+           });
+           setTodos(editedTodos);
+       };
+
+    const handleDateChange: HandleDateChange = (id, date) => {
+        const editedTodos = todos.map((todo) => {
+            if (todo.id === id) {
+                return {
+                    ...todo,
+                    date: date,
+                };
+            }
+            return todo;
+        });
+        setTodos(editedTodos);
+    };
+
+      const handleTimeChange: HandleTimeChange = (id, time) => {
+          const editedTodos = todos.map((todo) => {
+              if (todo.id === id) {
+                  return {
+                      ...todo,
+                      time: time,
+                  };
+              }
+              return todo;
+          });
+          setTodos(editedTodos);
+      };
+
     return (
         <>
             <div className="m-16 lg:m-32 md:m-20">
@@ -52,6 +95,9 @@ function App() {
                                 todos={unDoneTodos}
                                 handleStatusChange={handleStatusChange}
                                 handleIsDone={handleIsDone}
+                                handleDateChange={handleDateChange}
+                                handleEditTitle={handleEditTitle}
+                                handleTimeChange={handleTimeChange}
                             />
                         )}
                     />
