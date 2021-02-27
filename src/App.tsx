@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Route, Switch } from "react-router-dom";
 import Todos from "./components/routes/Todos";
 import { Data } from "./data/data";
 
@@ -40,11 +41,19 @@ function App() {
     return (
         <>
             <div className="m-16 lg:m-32 md:m-20">
-                <Todos
-                    todos={unDoneTodos}
-                    handleStatusChange={handleStatusChange}
-                    handleIsDone={handleIsDone}
-                />
+                <Switch>
+                    <Route
+                        path="/"
+                        exact
+                        component={() => (
+                            <Todos
+                                todos={unDoneTodos}
+                                handleStatusChange={handleStatusChange}
+                                handleIsDone={handleIsDone}
+                            />
+                        )}
+                    />
+                </Switch>
             </div>
         </>
     );
