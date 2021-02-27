@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import Alert from "./components/Alert";
+import DoneTasks from "./components/routes/DoneTasks";
 import Todos from "./components/routes/Todos";
 import Tabs from "./components/Tabs";
 import { Data } from "./data/data";
@@ -8,6 +9,7 @@ import { Data } from "./data/data";
 function App() {
     const [todos, setTodos] = useState<Todo[]>(Data);
     const [unDoneTodos, setUnDoneTodos] = useState<Todo[]>([]);
+    const [doneTodos, setDoneTodos] = useState<Todo[]>([]);
     const [showAlert, setShowAlert] = useState(true);
     const [alertDetails, setAlertDetails] = useState<AlertDetails>({
         color: "",
@@ -17,7 +19,10 @@ function App() {
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
+        // initial each of these statce anytime todo changed
+
         setUnDoneTodos(todos.filter((todo) => !todo.isDone));
+        setDoneTodos(todos.filter((todo) => todo.isDone));
     }, [todos]);
 
     const handleStatusChange: HandleStatusChange = (id) => {
@@ -153,6 +158,16 @@ function App() {
                                 handleEditTitle={handleEditTitle}
                                 handleTimeChange={handleTimeChange}
                                 handleRemoveTodo={handleRemoveTodo}
+                            />
+                        )}
+                    />
+
+                    <Route
+                        path="/donetasks"
+                        component={() => (
+                            <DoneTasks
+                                todos={doneTodos}
+                                handleIsDone={handleIsDone}
                             />
                         )}
                     />
