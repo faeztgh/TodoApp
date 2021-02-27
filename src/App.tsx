@@ -56,7 +56,7 @@ function App() {
                         type: "Success",
                         message: "Todo title changed successfully!",
                     });
-                    // showing alert fo 5 second
+                    // showing alert for 5 second
                     handleAlert();
 
                     return {
@@ -110,6 +110,18 @@ function App() {
         console.log(task);
     };
 
+    const handleRemoveTodo: HandleRemoveTodo = (id) => {
+        setTodos(todos.filter((todo) => todo.id !== id));
+
+        setAlertDetails({
+            color: "blue",
+            type: "Info",
+            message: "Todo Removed Successfully!",
+        });
+        // showing alert for 5 second
+        handleAlert();
+    };
+
     return (
         <>
             <div className="m-16 lg:m-32 md:m-20">
@@ -140,6 +152,7 @@ function App() {
                                 handleDateChange={handleDateChange}
                                 handleEditTitle={handleEditTitle}
                                 handleTimeChange={handleTimeChange}
+                                handleRemoveTodo={handleRemoveTodo}
                             />
                         )}
                     />
