@@ -127,6 +127,34 @@ function App() {
         handleAlert();
     };
 
+    const handleSort: HandleSort = (isAsc, isDone) => {
+        const sorted = () => {
+            if (isAsc) {
+                if (!isDone) {
+                    return unDoneTodos.sort((a, b) =>
+                        a.title > b.title ? 1 : b.title > a.title ? -1 : 0
+                    );
+                } else {
+                    return doneTodos.sort((a, b) =>
+                        a.title > b.title ? 1 : b.title > a.title ? -1 : 0
+                    );
+                }
+            } else {
+                if (isDone) {
+                    return doneTodos.sort((a, b) =>
+                        a.title < b.title ? 1 : b.title < a.title ? -1 : 0
+                    );
+                } else {
+                    return unDoneTodos.sort((a, b) =>
+                        a.title < b.title ? 1 : b.title < a.title ? -1 : 0
+                    );
+                }
+            }
+        };
+
+        isDone ? setDoneTodos(sorted) : setUnDoneTodos(sorted);
+    };
+
     return (
         <>
             <div className="m-16 lg:m-32 md:m-20">
@@ -158,6 +186,7 @@ function App() {
                                 handleEditTitle={handleEditTitle}
                                 handleTimeChange={handleTimeChange}
                                 handleRemoveTodo={handleRemoveTodo}
+                                handleSort={handleSort}
                             />
                         )}
                     />
@@ -168,6 +197,7 @@ function App() {
                             <DoneTasks
                                 todos={doneTodos}
                                 handleIsDone={handleIsDone}
+                                handleSort={handleSort}
                             />
                         )}
                     />

@@ -6,16 +6,18 @@ import MyTimePicker from "../MyTimePicker";
 
 interface DoneTasksProps {
     todos: Todo[];
+    handleSort: HandleSort;
     handleIsDone: HandleIsDone;
 }
 
 const DoneTasks: FC<DoneTasksProps> = (props) => {
-    const { todos, handleIsDone } = props;
+    const { todos, handleSort, handleIsDone } = props;
 
     const [isAsc, setIsAsc] = useState(false);
 
     const sort = () => {
         setIsAsc(!isAsc);
+        handleSort(isAsc, true);
     };
 
     return (
