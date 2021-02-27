@@ -14,3 +14,5 @@ type HandleEditTitle = (title: string, todoId: number) => void;
 type HandleDateChange = (id: number, date: Date) => void;
 
 type HandleTimeChange = (id: number, date: Date) => void;
+type AlertDetails = { color: string; type: string; message: string };
+type HandleAlert = () => void;
