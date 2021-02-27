@@ -10,3 +10,7 @@ type Todo = {
 type HandleStatusChange = (id: number) => void;
 
 type HandleIsDone = (id: number) => void;
+type HandleEditTitle = (title: string, todoId: number) => void;
+type HandleDateChange = (id: number, date: Date) => void;
+
+type HandleTimeChange = (id: number, date: Date) => void;
