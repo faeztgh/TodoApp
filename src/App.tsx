@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
+import Alert from "./components/Alert";
 import Todos from "./components/routes/Todos";
 import Tabs from "./components/Tabs";
 import { Data } from "./data/data";
@@ -7,6 +8,12 @@ import { Data } from "./data/data";
 function App() {
     const [todos, setTodos] = useState<Todo[]>(Data);
     const [unDoneTodos, setUnDoneTodos] = useState<Todo[]>([]);
+    const [showAlert, setShowAlert] = useState(true);
+    const [alertDetails, setAlertDetails] = useState<AlertDetails>({
+        color: "",
+        message: "",
+        type: "",
+    });
 
     useEffect(() => {
         setUnDoneTodos(todos.filter((todo) => !todo.isDone));
@@ -39,22 +46,28 @@ function App() {
         setTodos(newTodos);
     };
 
-       const handleEditTitle: HandleEditTitle = (newTitle, id) => {
-           const editedTodos = todos.map((todo) => {
-               if (todo.id === id) {
-                   if (todo.title !== newTitle) {
-                     
+    const handleEditTitle: HandleEditTitle = (newTitle, id) => {
+        const editedTodos = todos.map((todo) => {
+            if (todo.id === id) {
+                if (todo.title !== newTitle) {
+                    setAlertDetails({
+                        color: "green",
+                        type: "Success",
+                        message: "Todo title changed successfully!",
+                    });
+                    // showing alert fo 5 second
+                    handleAlert();
 
-                       return {
-                           ...todo,
-                           title: newTitle,
-                       };
-                   }
-               }
-               return todo;
-           });
-           setTodos(editedTodos);
-       };
+                    return {
+                        ...todo,
+                        title: newTitle,
+                    };
+                }
+            }
+            return todo;
+        });
+        setTodos(editedTodos);
+    };
 
     const handleDateChange: HandleDateChange = (id, date) => {
         const editedTodos = todos.map((todo) => {
@@ -69,23 +82,38 @@ function App() {
         setTodos(editedTodos);
     };
 
-      const handleTimeChange: HandleTimeChange = (id, time) => {
-          const editedTodos = todos.map((todo) => {
-              if (todo.id === id) {
-                  return {
-                      ...todo,
-                      time: time,
-                  };
-              }
-              return todo;
-          });
-          setTodos(editedTodos);
-      };
+    const handleAlert: HandleAlert = () => {
+        setShowAlert(true);
+        setTimeout(() => {
+            setShowAlert(false);
+        }, 5000);
+    };
+
+    const handleTimeChange: HandleTimeChange = (id, time) => {
+        const editedTodos = todos.map((todo) => {
+            if (todo.id === id) {
+                return {
+                    ...todo,
+                    time: time,
+                };
+            }
+            return todo;
+        });
+        setTodos(editedTodos);
+    };
 
     return (
         <>
             <div className="m-16 lg:m-32 md:m-20">
                 <Tabs />
+                {showAlert && (
+                    <Alert
+                        color={alertDetails.color}
+                        message={alertDetails.message}
+                        type={alertDetails.type}
+                        handleAlert={handleAlert}
+                    />
+                )}
                 <Switch>
                     <Route
                         path="/"
