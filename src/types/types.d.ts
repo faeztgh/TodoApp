@@ -16,3 +16,4 @@ type HandleDateChange = (id: number, date: Date) => void;
 type HandleTimeChange = (id: number, date: Date) => void;
 type AlertDetails = { color: string; type: string; message: string };
 type HandleAlert = () => void;
+type HandleAddNewTask = (todo) => void;
