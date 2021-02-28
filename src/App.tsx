@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import Alert from "./components/Alert";
@@ -11,6 +12,7 @@ function App() {
     const [unDoneTodos, setUnDoneTodos] = useState<Todo[]>([]);
     const [doneTodos, setDoneTodos] = useState<Todo[]>([]);
     const [showAlert, setShowAlert] = useState(false);
+    const [selectedFilter, setSelectedFilter] = useState("");
     const [alertDetails, setAlertDetails] = useState<AlertDetails>({
         color: "",
         message: "",
@@ -159,6 +161,19 @@ function App() {
         isDone ? setDoneTodos(sorted) : setUnDoneTodos(sorted);
     };
 
+    const handleFilter: HandleFilter = (state) => {
+        setSelectedFilter(state);
+        const now = moment();
+        let filteredTodos: Todo[] = [];
+        todos.forEach((todo) => {
+            if (moment(todo.date).diff(now, state) === 0) {
+                filteredTodos = [...filteredTodos, todo];
+            }
+        });
+        setDoneTodos(filteredTodos.filter((todo) => todo.isDone));
+        setUnDoneTodos(filteredTodos.filter((todo) => !todo.isDone));
+    };
+
     return (
         <>
             <div className="m-16 lg:m-32 md:m-20">
@@ -191,6 +206,8 @@ function App() {
                                 handleTimeChange={handleTimeChange}
                                 handleRemoveTodo={handleRemoveTodo}
                                 handleSort={handleSort}
+                                handleFilter={handleFilter}
+                                selectedFilter={selectedFilter}
                             />
                         )}
                     />
