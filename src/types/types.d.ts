@@ -7,17 +7,26 @@ type Todo = {
     time: Date;
 };
 
-type HandleStatusChange = (id: number) => void;
+type AlertDetails = { color: string; type: string; message: string };
 
-type HandleIsDone = (id: number) => void;
 type HandleEditTitle = (title: string, todoId: number) => void;
+
+type HandleSort = (isAsc: boolean, isDone: boolean) => void;
+
 type HandleDateChange = (id: number, date: Date) => void;
 
 type HandleTimeChange = (id: number, date: Date) => void;
-type AlertDetails = { color: string; type: string; message: string };
-type HandleAlert = () => void;
-type HandleAddNewTask = (todo) => void;
+
+type EditTitleSetValue = (value: string) => void;
+
+type HandleStatusChange = (id: number) => void;
 
 type HandleRemoveTodo = (id: number) => void;
-type HandleSort = (isAsc: boolean, isDone: boolean) => void;
+
+type HandleIsDone = (id: number) => void;
+
+type HandleAddNewTask = (todo) => void;
+
 type HandleFilter = (state) => void;
+
+type HandleAlert = () => void;
