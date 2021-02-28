@@ -1,24 +1,18 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { BiDownArrow, BiUpArrow } from "react-icons/bi";
 
-import MyDatePicker from "../MyDatePicker";
-import MyTimePicker from "../MyTimePicker";
+import MyDatePicker from "../../MyDatePicker";
+import MyTimePicker from "../../MyTimePicker";
 
 interface DoneTasksProps {
     todos: Todo[];
-    handleSort: HandleSort;
     handleIsDone: HandleIsDone;
+    sort: Sort;
+    isAsc: boolean;
 }
 
 const DoneTasks: FC<DoneTasksProps> = (props) => {
-    const { todos, handleSort, handleIsDone } = props;
-
-    const [isAsc, setIsAsc] = useState(false);
-
-    const sort = () => {
-        setIsAsc(!isAsc);
-        handleSort(isAsc, true);
-    };
+    const { todos, handleIsDone, sort, isAsc } = props;
 
     return (
         <>
@@ -55,19 +49,20 @@ const DoneTasks: FC<DoneTasksProps> = (props) => {
                             <tr key={todo.id}>
                                 <td>
                                     <input
+                                        className="w-4 h-4 mt-2 "
                                         type="checkbox"
                                         defaultChecked={todo.isDone}
                                         onChange={() => handleIsDone(todo.id)}
                                     />
                                 </td>
-                                <td className="px-2 py-1 text-gray-400">
+                                <td className="w-1/3 py-1 pl-1 font-normal text-gray-400 md:w-min sm:font-semibold">
                                     {todo.title}
                                 </td>
 
-                                <td className="text-gray-400">
+                                <td className="font-normal text-gray-400">
                                     <MyDatePicker todo={todo} disabled={true} />
                                 </td>
-                                <td className="text-gray-400">
+                                <td className="font-normal text-gray-400">
                                     <MyTimePicker todo={todo} disabled={true} />
                                 </td>
                             </tr>

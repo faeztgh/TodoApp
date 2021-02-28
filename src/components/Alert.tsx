@@ -10,17 +10,20 @@ interface AlertProps {
 }
 
 const Alert: FC<AlertProps> = (props) => {
-    const { color, type, message, handleAlert } = props;
+    const { color = "info", type, message, handleAlert } = props;
     return (
         <>
             <div
-                className={`text-white z-50 px-6 py-2.5 shadow-2xl border-0 rounded fixed mb-4 bottom-0 right-5 bg-${color}`}
+                className={`text-white sm:flex text-sm z-50 sm:text-lg sm:px-6 sm:py-2.5 px-2 py-2 shadow-2xl border-0 rounded fixed mb-4 bottom-0 right-5 bg-${color}`}
             >
-                <span className="inline-block mr-1 text-xl align-middle">
-                    <FaRegBell />
+                <span className="flex mr-1 text-base align-middle sm:text-xl">
+                    <FaRegBell className="mt-1" />
+                    <span className="pl-2 font-semibold uppercase">
+                        {type}!
+                    </span>
                 </span>
-                <span className="inline-block mr-8 capitalize align-middle">
-                    <b className="uppercase">{type}!</b> {message}
+                <span className="inline-block mr-3 capitalize align-middle">
+                    <span>{message}</span>
                 </span>
                 <button
                     className="inline-block mr-1 text-xl align-middle focus:border-transparent"

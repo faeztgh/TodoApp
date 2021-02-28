@@ -4,7 +4,7 @@ import AddTask from "./AddTask";
 
 interface TabsProps {
     showModal: boolean;
-    setShowModal: (isOpen: boolean) => void;
+    setShowModal: SetShowModal;
     handleAddNewTask: HandleAddNewTask;
 }
 
@@ -19,7 +19,7 @@ const Tabs: FC<TabsProps> = (props) => {
         <>
             <ul className="flex border-b h-11 list-reset">
                 <li
-                    className={`mr-1 -mb-px border-t border-l border-r rounded-t cursor-pointer
+                    className={`mr-1 -mb-px  whitespace-nowrap text-sm sm:text-base border-t border-l border-r rounded-t cursor-pointer
                         ${openTab === 1 ? active : deActive}`}
                 >
                     <Link
@@ -36,7 +36,7 @@ const Tabs: FC<TabsProps> = (props) => {
                     </Link>
                 </li>
                 <li
-                    className={`mr-1 -mb-px border-t border-l border-r rounded-t cursor-pointer
+                    className={`mr-1  whitespace-nowrap text-sm sm:text-base -mb-px border-t border-l border-r rounded-t cursor-pointer
                         ${openTab === 2 ? active : deActive}`}
                 >
                     <Link

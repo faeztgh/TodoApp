@@ -2,11 +2,10 @@ import moment from "moment";
 import React, { lazy, Suspense, useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import Loading from "./components/Loading";
-
 import { Data } from "./data/data";
 
-const DoneTasks = lazy(() => import("./components/routes/DoneTasks"));
-const Todos = lazy(() => import("./components/routes/Todos"));
+const DoneTasksContainer = lazy(() => import("./components/routes/DoneTasks"));
+const TodosContainer = lazy(() => import("./components/routes/Todos"));
 const Error = lazy(() => import("./components/routes/Error"));
 const Alert = lazy(() => import("./components/Alert"));
 const Tabs = lazy(() => import("./components/Tabs"));
@@ -179,7 +178,7 @@ function App() {
 
     return (
         <>
-            <div className="m-16 lg:m-32 md:m-20">
+            <div className="m-2.5 lg:m-32 md:m-20">
                 <Suspense fallback={<Loading />}>
                     <Tabs
                         handleAddNewTask={handleAddNewTask}
@@ -201,15 +200,15 @@ function App() {
                             path="/"
                             exact
                             component={() => (
-                                <Todos
+                                <TodosContainer
                                     todos={unDoneTodos}
-                                    handleStatusChange={handleStatusChange}
-                                    handleIsDone={handleIsDone}
-                                    handleDateChange={handleDateChange}
                                     handleEditTitle={handleEditTitle}
-                                    handleTimeChange={handleTimeChange}
+                                    handleStatusChange={handleStatusChange}
                                     handleRemoveTodo={handleRemoveTodo}
+                                    handleDateChange={handleDateChange}
+                                    handleTimeChange={handleTimeChange}
                                     handleSort={handleSort}
+                                    handleIsDone={handleIsDone}
                                     handleFilter={handleFilter}
                                     selectedFilter={selectedFilter}
                                 />
@@ -219,10 +218,10 @@ function App() {
                         <Route
                             path="/donetasks"
                             component={() => (
-                                <DoneTasks
+                                <DoneTasksContainer
                                     todos={doneTodos}
-                                    handleIsDone={handleIsDone}
                                     handleSort={handleSort}
+                                    handleIsDone={handleIsDone}
                                 />
                             )}
                         />

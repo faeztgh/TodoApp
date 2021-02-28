@@ -1,61 +1,44 @@
-import React, { FC, useRef, useState } from "react";
+import React, { FC } from "react";
 import { FaPencilAlt } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import "react-datepicker/dist/react-datepicker.css";
-import MyDatePicker from "../MyDatePicker";
-import MyTimePicker from "../MyTimePicker";
-import { BiDownArrow, BiUpArrow } from "react-icons/bi";
-import FilterGroupButton from "../buttons/FilterGroupButton";
+import FilterGroupButton from "../../buttons/FilterGroupButton";
+import MyDatePicker from "../../MyDatePicker";
+import MyTimePicker from "../../MyTimePicker";
+import { BiUpArrow, BiDownArrow } from "react-icons/bi";
 
 interface TodosProps {
     todos: Array<Todo>;
-    handleStatusChange: HandleStatusChange;
+    selectedFilter: string;
+    isAsc: boolean;
     handleEditTitle: HandleEditTitle;
+    handleStatusChange: HandleStatusChange;
+    handleRemoveTodo: HandleRemoveTodo;
     handleDateChange: HandleDateChange;
     handleTimeChange: HandleTimeChange;
-    handleRemoveTodo: HandleRemoveTodo;
-    handleSort: HandleSort;
     handleIsDone: HandleIsDone;
     handleFilter: HandleFilter;
-    selectedFilter: string;
+    handleAddRefsToTaskTitleRefs: handleAddRefsToTaskTitleRefs;
+    handleClickOnEdit: HandleClickOnEdit;
+    sort: Sort;
 }
+
 const Todos: FC<TodosProps> = (props) => {
     const {
         todos,
-        handleStatusChange,
-        handleIsDone,
+        handleAddRefsToTaskTitleRefs,
+        handleClickOnEdit,
         handleEditTitle,
         handleDateChange,
-        handleTimeChange,
         handleRemoveTodo,
-        handleSort,
+        handleStatusChange,
+        handleTimeChange,
+        handleIsDone,
         handleFilter,
+        sort,
+        isAsc,
         selectedFilter,
     } = props;
-
-    const taskTitleRefs = useRef<HTMLInputElement[]>([]);
-    taskTitleRefs.current = [];
-
-    const handleAddRefsToTaskTitleRefs = (input: HTMLInputElement) => {
-        if (input && !taskTitleRefs.current.includes(input)) {
-            taskTitleRefs.current.push(input);
-        }
-    };
-
-    const handleClickOnEdit = (title: string) => {
-        taskTitleRefs.current.forEach((el: HTMLInputElement) => {
-            if (el.value === title) {
-                el.focus();
-            }
-        });
-    };
-
-    const [isAsc, setIsAsc] = useState(false);
-
-    const sort = () => {
-        setIsAsc(!isAsc);
-        handleSort(isAsc, false);
-    };
 
     return (
         <>
@@ -66,7 +49,7 @@ const Todos: FC<TodosProps> = (props) => {
                 />
             </div>
             <table className="w-1/6 divide-y divide-gray-200 table-auto xl:w-full lg:w-full">
-                <thead className="bg-white border-t">
+                <thead className="bg-white border-t ">
                     <tr>
                         <th></th>
 
@@ -102,6 +85,7 @@ const Todos: FC<TodosProps> = (props) => {
                             <tr key={todo.id}>
                                 <td>
                                     <input
+                                        className="w-4 h-4 mt-2 form-checkbox"
                                         type="checkbox"
                                         defaultChecked={todo.isDone}
                                         onChange={() => handleIsDone(todo.id)}
@@ -152,7 +136,7 @@ const Todos: FC<TodosProps> = (props) => {
                                 </td>
                                 <td className="flex justify-around">
                                     <button
-                                        className="text-cornFlowerBlue"
+                                        className="text-cornFlowerBlue focus:outline-none"
                                         onClick={() =>
                                             handleClickOnEdit(todo.title)
                                         }
@@ -160,7 +144,7 @@ const Todos: FC<TodosProps> = (props) => {
                                         <FaPencilAlt size="1.2em" />
                                     </button>
                                     <button
-                                        className="text-carnationRed"
+                                        className="text-carnationRed focus:outline-none"
                                         onClick={() =>
                                             handleRemoveTodo(todo.id)
                                         }

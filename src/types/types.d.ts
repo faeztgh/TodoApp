@@ -7,6 +7,8 @@ type Todo = {
     time: Date;
 };
 
+type handleAddRefsToTaskTitleRefs = (input: HTMLInputElement) => void;
+
 type AlertDetails = { color: string; type: string; message: string };
 
 type HandleEditTitle = (title: string, todoId: number) => void;
@@ -17,9 +19,13 @@ type HandleDateChange = (id: number, date: Date) => void;
 
 type HandleTimeChange = (id: number, date: Date) => void;
 
+type HandleClickOnEdit = (title: string) => void;
+
 type EditTitleSetValue = (value: string) => void;
 
 type HandleStatusChange = (id: number) => void;
+
+type SetShowModal = (isOpen: boolean) => void;
 
 type HandleRemoveTodo = (id: number) => void;
 
@@ -30,3 +36,6 @@ type HandleAddNewTask = (todo) => void;
 type HandleFilter = (state) => void;
 
 type HandleAlert = () => void;
+
+type Sort = () => void;
+
