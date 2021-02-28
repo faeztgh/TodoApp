@@ -28,7 +28,7 @@ const Todos: FC<TodosProps> = (props) => {
     return (
         <>
             <table className="w-1/6 divide-y divide-gray-200 table-auto xl:w-full lg:w-full">
-                <thead className="bg-white border-t ">
+                <thead className="bg-white border-t">
                     <tr>
                         <th></th>
 
