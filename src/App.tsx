@@ -179,7 +179,7 @@ function App() {
     return (
         <>
             <div className="m-2.5 lg:m-32 md:m-20">
-                <Suspense fallback={<Loading />}>
+                <Suspense fallback={<Loading count={todos.length} />}>
                     <Tabs
                         handleAddNewTask={handleAddNewTask}
                         setShowModal={setShowModal}
