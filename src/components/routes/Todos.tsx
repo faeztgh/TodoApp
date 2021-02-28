@@ -47,8 +47,6 @@ const Todos: FC<TodosProps> = (props) => {
     };
 
     const [isAsc, setIsAsc] = useState(false);
-    const taskTitle = useRef<HTMLInputElement>(null);
-
 
     const sort = () => {
         setIsAsc(!isAsc);
