@@ -23,7 +23,22 @@ const Todos: FC<TodosProps> = (props) => {
         handleTimeChange,
     } = props;
 
-    const taskTitle = useRef<HTMLInputElement>(null);
+    const taskTitleRefs = useRef<HTMLInputElement[]>([]);
+    taskTitleRefs.current = [];
+
+    const handleAddRefsToTaskTitleRefs = (input: HTMLInputElement) => {
+        if (input && !taskTitleRefs.current.includes(input)) {
+            taskTitleRefs.current.push(input);
+        }
+    };
+
+    const handleClickOnEdit = (title: string) => {
+        taskTitleRefs.current.forEach((el: HTMLInputElement) => {
+            if (el.value === title) {
+                el.focus();
+            }
+        });
+    };
 
     return (
         <>
@@ -62,7 +77,7 @@ const Todos: FC<TodosProps> = (props) => {
                                     <input
                                         className="w-5/6 px-2 py-1 font-semibold text-gray-800 md:w-min"
                                         type="text"
-                                        ref={taskTitle}
+                                        ref={handleAddRefsToTaskTitleRefs}
                                         defaultValue={todo.title}
                                         onBlur={(e) =>
                                             handleEditTitle(
@@ -105,7 +120,7 @@ const Todos: FC<TodosProps> = (props) => {
                                     <button
                                         className="text-cornFlowerBlue"
                                         onClick={() =>
-                                            taskTitle.current?.focus()
+                                            handleClickOnEdit(todo.title)
                                         }
                                     >
                                         <FaPencilAlt size="1.2em" />
