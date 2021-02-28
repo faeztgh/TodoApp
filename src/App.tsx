@@ -7,6 +7,7 @@ import { Data } from "./data/data";
 
 const DoneTasks = lazy(() => import("./components/routes/DoneTasks"));
 const Todos = lazy(() => import("./components/routes/Todos"));
+const Error = lazy(() => import("./components/routes/Error"));
 const Alert = lazy(() => import("./components/Alert"));
 const Tabs = lazy(() => import("./components/Tabs"));
 
@@ -225,6 +226,7 @@ function App() {
                                 />
                             )}
                         />
+                        <Route path="/*" component={() => <Error />} />
                     </Switch>
                 </Suspense>
             </div>
