@@ -4,7 +4,7 @@ import Modal from "./Modal";
 
 interface AddTaskProps {
     showModal: boolean;
-    setShowModal: (isOpen: boolean) => void;
+    setShowModal: SetShowModal;
     handleAddNewTask: HandleAddNewTask;
 }
 

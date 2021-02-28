@@ -39,7 +39,7 @@ const MobileDoneTasks: FC<MobileDoneTasksProps> = (props) => {
                             key={todo.id}
                             className="flex flex-no-wrap w-full my-5 overflow-hidden border-2 rounded-lg shadow-lg sm:bg-white sm:shadow-lg lg:flex-col"
                         >
-                            <thead className="bg-white">
+                            <thead className="bg-gray-100">
                                 <tr className="flex flex-col bg-gray-100 bg-teal-400 rounded-l-lg flex-no wrap sm:table-row sm:rounded-none sm:mb-0">
                                     <th className="p-3 text-left text-gray-900">
                                         Tasks
@@ -56,7 +56,7 @@ const MobileDoneTasks: FC<MobileDoneTasksProps> = (props) => {
                             </thead>
                             <tbody className="flex-1 bg-white sm:flex-none">
                                 <tr className="flex flex-col h-full flex-nowrap sm:table-row sm:mb-0">
-                                    <td className="p-2 font-normal text-gray-400 border-b border-l">
+                                    <td className="p-2 font-normal text-gray-400 whitespace-pre-wrap border-b border-l">
                                         <input
                                             className="w-3.5 h-3.5 mr-2 align-middle"
                                             type="checkbox"
@@ -68,13 +68,13 @@ const MobileDoneTasks: FC<MobileDoneTasksProps> = (props) => {
                                         {todo.title}
                                     </td>
 
-                                    <td className="p-3 text-sm font-normal text-gray-400 border-b border-l">
+                                    <td className="p-3 pl-0 text-sm font-normal text-gray-400 border-b border-l">
                                         <MyDatePicker
                                             todo={todo}
                                             disabled={true}
                                         />
                                     </td>
-                                    <td className="p-3 text-sm font-normal text-gray-400 border-l">
+                                    <td className="p-3 pl-0 text-sm font-normal text-gray-400 border-l">
                                         <MyTimePicker
                                             todo={todo}
                                             disabled={true}

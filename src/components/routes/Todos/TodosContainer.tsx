@@ -1,5 +1,4 @@
-import React, { FC, lazy, Suspense, useEffect, useRef, useState } from "react";
-import Loading from "../../Loading";
+import React, { FC, lazy, useEffect, useRef, useState } from "react";
 interface TodosContainerProps {
     todos: Array<Todo>;
     handleEditTitle: HandleEditTitle;

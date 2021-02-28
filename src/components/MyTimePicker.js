@@ -8,7 +8,7 @@ const MyTimePicker = (props) => {
     return (
         <>
             <DatePicker
-                className="w-20 pl-2 font-semibold cursor-pointer lg:min-w-max"
+                className="w-20 pl-2 font-semibold"
                 selected={startTime}
                 onChange={(date) => handleTimeChange(todo.id, date)}
                 showTimeSelect
