@@ -16,9 +16,9 @@ interface ModalProps {
 const Modal: FC<ModalProps> = (props) => {
     const { showModal, setShowModal, handleAddNewTask } = props;
     const [isValidInput, setIsValidInput] = useState(false);
-    const [startDate, setStartDate] = useState<Date>(new Date());
     const [chosenDate, setChosenDate] = useState<Date>(new Date());
     const [chosenTime, setChosenTime] = useState<Date>(new Date());
+    const startDate = new Date();
 
     const taskTitle = useRef<HTMLInputElement>(null);
     const taskStatus = useRef<HTMLSelectElement>(null);

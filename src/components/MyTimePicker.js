@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import DatePicker from "react-datepicker";
 
 const MyTimePicker = (props) => {
     const { todo, handleTimeChange, disabled } = props;
-    const [startTime, setStartTime] = useState(new Date(todo.time));
+    const startTime = new Date(todo.time);
 
     return (
         <>
