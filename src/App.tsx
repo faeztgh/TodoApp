@@ -1,13 +1,13 @@
 import moment from "moment";
 import React, { lazy, Suspense, useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
+import Alert from "./components/Alert";
 import Loading from "./components/Loading";
 import { Data } from "./data/data";
 
 const DoneTasksContainer = lazy(() => import("./components/routes/DoneTasks"));
 const TodosContainer = lazy(() => import("./components/routes/Todos"));
 const Error = lazy(() => import("./components/routes/Error"));
-const Alert = lazy(() => import("./components/Alert"));
 const Tabs = lazy(() => import("./components/Tabs"));
 
 function App() {
