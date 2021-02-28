@@ -93,7 +93,7 @@ function App() {
     };
 
     const handleAlert: HandleAlert = () => {
-        setShowAlert(true);
+        setShowAlert(!showAlert);
         setTimeout(() => {
             setShowAlert(false);
         }, 5000);
