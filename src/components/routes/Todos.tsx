@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import MyDatePicker from "../MyDatePicker";
 import MyTimePicker from "../MyTimePicker";
 import { BiDownArrow, BiUpArrow } from "react-icons/bi";
+import FilterGroupButton from "../buttons/FilterGroupButton";
 
 interface TodosProps {
     todos: Array<Todo>;
@@ -12,9 +13,11 @@ interface TodosProps {
     handleEditTitle: HandleEditTitle;
     handleDateChange: HandleDateChange;
     handleTimeChange: HandleTimeChange;
-    handleIsDone: HandleIsDone;
     handleRemoveTodo: HandleRemoveTodo;
     handleSort: HandleSort;
+    handleIsDone: HandleIsDone;
+    handleFilter: HandleFilter;
+    selectedFilter: string;
 }
 const Todos: FC<TodosProps> = (props) => {
     const {
@@ -26,8 +29,9 @@ const Todos: FC<TodosProps> = (props) => {
         handleTimeChange,
         handleRemoveTodo,
         handleSort,
+        handleFilter,
+        selectedFilter,
     } = props;
-
 
     const taskTitleRefs = useRef<HTMLInputElement[]>([]);
     taskTitleRefs.current = [];
@@ -55,6 +59,12 @@ const Todos: FC<TodosProps> = (props) => {
 
     return (
         <>
+            <div className="flex py-7" dir="rtl">
+                <FilterGroupButton
+                    handleFilter={handleFilter}
+                    selectedFilter={selectedFilter}
+                />
+            </div>
             <table className="w-1/6 divide-y divide-gray-200 table-auto xl:w-full lg:w-full">
                 <thead className="bg-white border-t">
                     <tr>
