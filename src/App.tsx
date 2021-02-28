@@ -55,7 +55,7 @@ function App() {
     const handleEditTitle: HandleEditTitle = (newTitle, id) => {
         const editedTodos = todos.map((todo) => {
             if (todo.id === id) {
-                if (todo.title !== newTitle) {
+                if (todo.title !== newTitle && newTitle.trim() !== "") {
                     setAlertDetails({
                         color: "success",
                         type: "Success",
