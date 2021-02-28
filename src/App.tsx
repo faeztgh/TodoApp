@@ -1,11 +1,14 @@
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
-import Alert from "./components/Alert";
-import DoneTasks from "./components/routes/DoneTasks";
-import Todos from "./components/routes/Todos";
-import Tabs from "./components/Tabs";
+import Loading from "./components/Loading";
+
 import { Data } from "./data/data";
+
+const DoneTasks = lazy(() => import("./components/routes/DoneTasks"));
+const Todos = lazy(() => import("./components/routes/Todos"));
+const Alert = lazy(() => import("./components/Alert"));
+const Tabs = lazy(() => import("./components/Tabs"));
 
 function App() {
     const [todos, setTodos] = useState<Todo[]>(Data);
@@ -22,7 +25,6 @@ function App() {
 
     useEffect(() => {
         // initial each of these statce anytime todo changed
-
         setUnDoneTodos(todos.filter((todo) => !todo.isDone));
         setDoneTodos(todos.filter((todo) => todo.isDone));
     }, [todos]);
@@ -177,52 +179,54 @@ function App() {
     return (
         <>
             <div className="m-16 lg:m-32 md:m-20">
-                <Tabs
-                    handleAddNewTask={handleAddNewTask}
-                    setShowModal={setShowModal}
-                    showModal={showModal}
-                />
-
-                {showAlert && (
-                    <Alert
-                        color={alertDetails.color}
-                        message={alertDetails.message}
-                        type={alertDetails.type}
-                        handleAlert={handleAlert}
-                    />
-                )}
-
-                <Switch>
-                    <Route
-                        path="/"
-                        exact
-                        component={() => (
-                            <Todos
-                                todos={unDoneTodos}
-                                handleStatusChange={handleStatusChange}
-                                handleIsDone={handleIsDone}
-                                handleDateChange={handleDateChange}
-                                handleEditTitle={handleEditTitle}
-                                handleTimeChange={handleTimeChange}
-                                handleRemoveTodo={handleRemoveTodo}
-                                handleSort={handleSort}
-                                handleFilter={handleFilter}
-                                selectedFilter={selectedFilter}
-                            />
-                        )}
+                <Suspense fallback={<Loading />}>
+                    <Tabs
+                        handleAddNewTask={handleAddNewTask}
+                        setShowModal={setShowModal}
+                        showModal={showModal}
                     />
 
-                    <Route
-                        path="/donetasks"
-                        component={() => (
-                            <DoneTasks
-                                todos={doneTodos}
-                                handleIsDone={handleIsDone}
-                                handleSort={handleSort}
-                            />
-                        )}
-                    />
-                </Switch>
+                    {showAlert && (
+                        <Alert
+                            color={alertDetails.color}
+                            message={alertDetails.message}
+                            type={alertDetails.type}
+                            handleAlert={handleAlert}
+                        />
+                    )}
+
+                    <Switch>
+                        <Route
+                            path="/"
+                            exact
+                            component={() => (
+                                <Todos
+                                    todos={unDoneTodos}
+                                    handleStatusChange={handleStatusChange}
+                                    handleIsDone={handleIsDone}
+                                    handleDateChange={handleDateChange}
+                                    handleEditTitle={handleEditTitle}
+                                    handleTimeChange={handleTimeChange}
+                                    handleRemoveTodo={handleRemoveTodo}
+                                    handleSort={handleSort}
+                                    handleFilter={handleFilter}
+                                    selectedFilter={selectedFilter}
+                                />
+                            )}
+                        />
+
+                        <Route
+                            path="/donetasks"
+                            component={() => (
+                                <DoneTasks
+                                    todos={doneTodos}
+                                    handleIsDone={handleIsDone}
+                                    handleSort={handleSort}
+                                />
+                            )}
+                        />
+                    </Switch>
+                </Suspense>
             </div>
         </>
     );
