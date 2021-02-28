@@ -14,7 +14,7 @@ const Alert: FC<AlertProps> = (props) => {
     return (
         <>
             <div
-                className={` text-white z-50 px-6 py-2.5 border-0 rounded fixed mb-4 bottom-0 right-5 bg-${color}-500`}
+                className={`text-white z-50 px-6 py-2.5 shadow-2xl border-0 rounded fixed mb-4 bottom-0 right-5 bg-${color}`}
             >
                 <span className="inline-block mr-1 text-xl align-middle">
                     <FaRegBell />
