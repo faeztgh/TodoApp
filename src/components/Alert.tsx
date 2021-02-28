@@ -29,6 +29,7 @@ const Alert: FC<AlertProps> = (props) => {
                     <AiOutlineCloseCircle />
                 </button>
             </div>
+            <div className="hidden bg-success bg-info bg-danger bg-warning"></div>
         </>
     );
 };
