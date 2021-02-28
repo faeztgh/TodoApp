@@ -17,3 +17,6 @@ type HandleTimeChange = (id: number, date: Date) => void;
 type AlertDetails = { color: string; type: string; message: string };
 type HandleAlert = () => void;
 type HandleAddNewTask = (todo) => void;
+
+type HandleRemoveTodo = (id: number) => void;
+type HandleSort = (isAsc: boolean, isDone: boolean) => void;

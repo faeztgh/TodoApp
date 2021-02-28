@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import Alert from "./components/Alert";
+import DoneTasks from "./components/routes/DoneTasks";
 import Todos from "./components/routes/Todos";
 import Tabs from "./components/Tabs";
 import { Data } from "./data/data";
@@ -8,6 +9,7 @@ import { Data } from "./data/data";
 function App() {
     const [todos, setTodos] = useState<Todo[]>(Data);
     const [unDoneTodos, setUnDoneTodos] = useState<Todo[]>([]);
+    const [doneTodos, setDoneTodos] = useState<Todo[]>([]);
     const [showAlert, setShowAlert] = useState(true);
     const [alertDetails, setAlertDetails] = useState<AlertDetails>({
         color: "",
@@ -17,7 +19,10 @@ function App() {
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
+        // initial each of these statce anytime todo changed
+
         setUnDoneTodos(todos.filter((todo) => !todo.isDone));
+        setDoneTodos(todos.filter((todo) => todo.isDone));
     }, [todos]);
 
     const handleStatusChange: HandleStatusChange = (id) => {
@@ -56,7 +61,7 @@ function App() {
                         type: "Success",
                         message: "Todo title changed successfully!",
                     });
-                    // showing alert fo 5 second
+                    // showing alert for 5 second
                     handleAlert();
 
                     return {
@@ -110,6 +115,46 @@ function App() {
         console.log(task);
     };
 
+    const handleRemoveTodo: HandleRemoveTodo = (id) => {
+        setTodos(todos.filter((todo) => todo.id !== id));
+
+        setAlertDetails({
+            color: "blue",
+            type: "Info",
+            message: "Todo Removed Successfully!",
+        });
+        // showing alert for 5 second
+        handleAlert();
+    };
+
+    const handleSort: HandleSort = (isAsc, isDone) => {
+        const sorted = () => {
+            if (isAsc) {
+                if (!isDone) {
+                    return unDoneTodos.sort((a, b) =>
+                        a.title > b.title ? 1 : b.title > a.title ? -1 : 0
+                    );
+                } else {
+                    return doneTodos.sort((a, b) =>
+                        a.title > b.title ? 1 : b.title > a.title ? -1 : 0
+                    );
+                }
+            } else {
+                if (isDone) {
+                    return doneTodos.sort((a, b) =>
+                        a.title < b.title ? 1 : b.title < a.title ? -1 : 0
+                    );
+                } else {
+                    return unDoneTodos.sort((a, b) =>
+                        a.title < b.title ? 1 : b.title < a.title ? -1 : 0
+                    );
+                }
+            }
+        };
+
+        isDone ? setDoneTodos(sorted) : setUnDoneTodos(sorted);
+    };
+
     return (
         <>
             <div className="m-16 lg:m-32 md:m-20">
@@ -140,6 +185,19 @@ function App() {
                                 handleDateChange={handleDateChange}
                                 handleEditTitle={handleEditTitle}
                                 handleTimeChange={handleTimeChange}
+                                handleRemoveTodo={handleRemoveTodo}
+                                handleSort={handleSort}
+                            />
+                        )}
+                    />
+
+                    <Route
+                        path="/donetasks"
+                        component={() => (
+                            <DoneTasks
+                                todos={doneTodos}
+                                handleIsDone={handleIsDone}
+                                handleSort={handleSort}
                             />
                         )}
                     />
