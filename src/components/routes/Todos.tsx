@@ -27,8 +27,28 @@ const Todos: FC<TodosProps> = (props) => {
         handleRemoveTodo,
         handleSort,
     } = props;
+
+
+    const taskTitleRefs = useRef<HTMLInputElement[]>([]);
+    taskTitleRefs.current = [];
+
+    const handleAddRefsToTaskTitleRefs = (input: HTMLInputElement) => {
+        if (input && !taskTitleRefs.current.includes(input)) {
+            taskTitleRefs.current.push(input);
+        }
+    };
+
+    const handleClickOnEdit = (title: string) => {
+        taskTitleRefs.current.forEach((el: HTMLInputElement) => {
+            if (el.value === title) {
+                el.focus();
+            }
+        });
+    };
+
     const [isAsc, setIsAsc] = useState(false);
     const taskTitle = useRef<HTMLInputElement>(null);
+
 
     const sort = () => {
         setIsAsc(!isAsc);
@@ -38,7 +58,7 @@ const Todos: FC<TodosProps> = (props) => {
     return (
         <>
             <table className="w-1/6 divide-y divide-gray-200 table-auto xl:w-full lg:w-full">
-                <thead className="bg-white border-t ">
+                <thead className="bg-white border-t">
                     <tr>
                         <th></th>
 
@@ -83,7 +103,7 @@ const Todos: FC<TodosProps> = (props) => {
                                     <input
                                         className="w-5/6 px-2 py-1 font-semibold text-gray-800 md:w-min"
                                         type="text"
-                                        ref={taskTitle}
+                                        ref={handleAddRefsToTaskTitleRefs}
                                         defaultValue={todo.title}
                                         onBlur={(e) =>
                                             handleEditTitle(
@@ -126,7 +146,7 @@ const Todos: FC<TodosProps> = (props) => {
                                     <button
                                         className="text-cornFlowerBlue"
                                         onClick={() =>
-                                            taskTitle.current?.focus()
+                                            handleClickOnEdit(todo.title)
                                         }
                                     >
                                         <FaPencilAlt size="1.2em" />
