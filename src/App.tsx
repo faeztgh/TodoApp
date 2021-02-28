@@ -10,7 +10,7 @@ function App() {
     const [todos, setTodos] = useState<Todo[]>(Data);
     const [unDoneTodos, setUnDoneTodos] = useState<Todo[]>([]);
     const [doneTodos, setDoneTodos] = useState<Todo[]>([]);
-    const [showAlert, setShowAlert] = useState(true);
+    const [showAlert, setShowAlert] = useState(false);
     const [alertDetails, setAlertDetails] = useState<AlertDetails>({
         color: "",
         message: "",
@@ -57,7 +57,7 @@ function App() {
             if (todo.id === id) {
                 if (todo.title !== newTitle) {
                     setAlertDetails({
-                        color: "green",
+                        color: "success",
                         type: "Success",
                         message: "Todo title changed successfully!",
                     });
@@ -112,18 +112,22 @@ function App() {
         const id = todos.length === 0 ? 0 : todos[todos.length - 1].id + 1;
         task = { id: id, ...task };
         setTodos([...todos, task]);
-        console.log(task);
+        setAlertDetails({
+            color: "info",
+            type: "Info",
+            message: "Todo Added Successfully!",
+        });
+        handleAlert();
     };
 
     const handleRemoveTodo: HandleRemoveTodo = (id) => {
         setTodos(todos.filter((todo) => todo.id !== id));
 
         setAlertDetails({
-            color: "blue",
-            type: "Info",
-            message: "Todo Removed Successfully!",
+            color: "warning",
+            type: "Warning",
+            message: "Todo Removed!",
         });
-        // showing alert for 5 second
         handleAlert();
     };
 
