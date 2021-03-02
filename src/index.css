@@ -10,7 +10,7 @@ td {
 }
 
 button:focus {
-    @apply outline-none;
+    @apply outline-none border-solid border sm:border-2 border-ribbonBlue;
 }
 
 input:focus {
@@ -20,6 +20,38 @@ input:focus {
 @layer components {
     .alert-container {
         @apply text-white sm:flex text-sm z-50 sm:text-lg sm:px-6 sm:py-2.5 px-2 py-2 shadow-2xl border-0 rounded fixed mb-4 bottom-0 right-5;
+    }
+
+    .addTask-btn {
+        @apply flex pl-1 justify-around shadow-md px-2 py-1.5 ml-auto bg-cornFlowerBlue hover:bg-cornFlowerBlue_light rounded text-gray-50 self-start whitespace-nowrap text-sm sm:text-base;
+    }
+
+    .filterGroup-btn {
+        @apply flex rounded hover:bg-gray-100 cursor-pointer hover:scale-110 focus:outline-none justify-center px-4 py-2 text-base font-semibold transition duration-200 ease-in-out border;
+    }
+
+    .goBackHome-btn {
+        @apply p-4 font-semibold text-white transition-all duration-300 bg-indigo-700 border border-gray-800 rounded shadow-lg hover:shadow-xl hover:bg-indigo-600;
+    }
+
+    .status-btn {
+        @apply capitalize text-sm rounded-full px-3 py-1.5 text-gray-50 whitespace-nowrap shadow hover:shadow-lg;
+    }
+
+    .modal-newTask-input {
+        @apply relative w-5/6 px-2 py-2 text-base text-gray-500 placeholder-gray-400 bg-gray-100 rounded shadow outline-none sm:w-full sm:text-lg focus:bg-white focus:outline-none focus:shadow-lg;
+    }
+
+    .modal-addTask-btn {
+        @apply sm:px-6 px-2 py-3 whitespace-nowrap mb-1 mr-1 text-sm font-bold text-white uppercase rounded shadow outline-none bg-cornFlowerBlue hover:bg-cornFlowerBlue_light hover:shadow-lg focus:outline-none;
+    }
+
+    .modal-close-btn {
+        @apply px-2 py-2 mb-1 mr-1 text-sm font-bold uppercase outline-none focus:border-transparent sm:px-6 text-carnationRed hover:text-carnationRed_light focus:outline-none;
+    }
+
+    .tabs-listItem {
+        @apply mr-1 -mb-px  whitespace-nowrap text-sm sm:text-base border-t border-l border-r rounded-t cursor-pointer;
     }
 }
 
