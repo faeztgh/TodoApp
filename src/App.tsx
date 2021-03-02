@@ -51,7 +51,7 @@ function App() {
     return (
         <>
             <Router>
-                <div className="m-2.5 lg:m-32 md:m-20">
+                <div className="m-4 lg:m-32 xl:mx-80 md:m-20">
                     <Suspense fallback={<Loading count={todos.length} />}>
                         <Tabs />
                         <div className="flex py-7" dir="rtl">
