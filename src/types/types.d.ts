@@ -7,9 +7,19 @@ type Todo = {
     time: Date;
 };
 
+type InitialState = {
+    todos: Todo[];
+    doneTodos: Todo[];
+    unDoneTodos: Todo[];
+};
+
 type handleAddRefsToTaskTitleRefs = (input: HTMLInputElement) => void;
 
-type AlertDetails = { color: string; type: string; message: string };
+type AlertDetails = { color: AlertColor; type: string; message: string };
+
+type AlertType = "success" | "warning" | "info" | "danger" | "Error" | "";
+
+type AlertColor = "success" | "warning" | "info" | "danger" | "";
 
 type HandleEditTitle = (title: string, todoId: number) => void;
 
@@ -33,9 +43,8 @@ type HandleIsDone = (id: number) => void;
 
 type HandleAddNewTask = (todo) => void;
 
-type HandleFilter = (state) => void;
+type HandleFilter = (state: any) => void;
 
-type HandleAlert = () => void;
+type CloseAlert = () => void;
 
 type Sort = () => void;
-

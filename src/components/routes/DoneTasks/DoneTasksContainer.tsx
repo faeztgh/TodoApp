@@ -1,19 +1,18 @@
 import React, { FC, lazy, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { changeTodoIsDone, sortTodos } from "../../../redux/actions/Actions";
+import { RootState } from "../../../redux/reducers/AllReducers";
 
 const DoneTasks = lazy(() => import("./DoneTasks"));
 const MobileDoneTasks = lazy(() => import("./MobileDoneTasks"));
 
-interface DoneTasksContainerProps {
-    todos: Todo[];
-    handleSort: HandleSort;
-    handleIsDone: HandleIsDone;
-}
-const DoneTasksContainer: FC<DoneTasksContainerProps> = (props) => {
-    const { todos, handleSort, handleIsDone } = props;
-
+const DoneTasksContainer: FC = () => {
     const [isAsc, setIsAsc] = useState(false);
+    let todos: Todo[] = useSelector((state: RootState) => state.todos);
+    todos = todos.filter((todo) => todo.isDone);
 
     const [isMobile, setIsMobile] = useState<boolean>();
+    const dispatch = useDispatch();
 
     const handleIsMobile = () => {
         if (window.innerWidth < 640) {
@@ -35,6 +34,14 @@ const DoneTasksContainer: FC<DoneTasksContainerProps> = (props) => {
     const sort = () => {
         setIsAsc(!isAsc);
         handleSort(isAsc, true);
+    };
+
+    const handleSort: HandleSort = (isAsc, isDone) => {
+        dispatch(sortTodos(isAsc, isDone));
+    };
+
+    const handleIsDone: HandleIsDone = (id) => {
+        dispatch(changeTodoIsDone(id));
     };
 
     return (

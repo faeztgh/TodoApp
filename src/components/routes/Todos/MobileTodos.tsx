@@ -2,30 +2,28 @@ import React, { FC } from "react";
 import { FaPencilAlt } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import "react-datepicker/dist/react-datepicker.css";
-import FilterGroupButton from "../../buttons/FilterGroupButton";
-import MyDatePicker from "../../MyDatePicker";
-import MyTimePicker from "../../MyTimePicker";
+import MyDatePicker from "../../date-picker/MyDatePicker";
 import { BiUpArrow, BiDownArrow } from "react-icons/bi";
+import MyTimePicker from "../../date-picker/MyTimePicker";
 
 interface TodosProps {
     todos: Todo[];
-    selectedFilter: string;
     isAsc: boolean;
-    handleEditTitle: HandleEditTitle;
+    handleAddRefsToTaskTitleRefs: handleAddRefsToTaskTitleRefs;
     handleStatusChange: HandleStatusChange;
+    handleClickOnEdit: HandleClickOnEdit;
     handleRemoveTodo: HandleRemoveTodo;
     handleDateChange: HandleDateChange;
     handleTimeChange: HandleTimeChange;
+    handleEditTitle: HandleEditTitle;
     handleIsDone: HandleIsDone;
-    handleFilter: HandleFilter;
-    handleAddRefsToTaskTitleRefs: handleAddRefsToTaskTitleRefs;
-    handleClickOnEdit: HandleClickOnEdit;
     sort: Sort;
 }
 
 const MobileTodos: FC<TodosProps> = (props) => {
     const {
         todos,
+        isAsc,
         handleAddRefsToTaskTitleRefs,
         handleClickOnEdit,
         handleEditTitle,
@@ -34,20 +32,11 @@ const MobileTodos: FC<TodosProps> = (props) => {
         handleStatusChange,
         handleTimeChange,
         handleIsDone,
-        handleFilter,
         sort,
-        isAsc,
-        selectedFilter,
     } = props;
 
     return (
         <>
-            <div className="flex py-7" dir="rtl">
-                <FilterGroupButton
-                    handleFilter={handleFilter}
-                    selectedFilter={selectedFilter}
-                />
-            </div>
             <div className="container">
                 <button
                     className="px-3 py-1.5 shadow-md text-gray-800 bg-gray-200 rounded"
@@ -74,11 +63,13 @@ const MobileTodos: FC<TodosProps> = (props) => {
                             key={todo.id}
                             className="flex flex-no-wrap w-full my-5 overflow-hidden border-2 rounded-lg shadow-lg sm:bg-white sm:shadow-lg lg:flex-col"
                         >
-                            <thead className="bg-gray-100">
+                            <thead className="bg-white">
                                 <tr className="flex flex-col bg-gray-100 bg-teal-400 rounded-l-lg flex-no wrap sm:table-row sm:rounded-none sm:mb-0">
                                     <th className="p-3 text-left ">Tasks</th>
 
-                                    <th className="p-4 text-left">Status</th>
+                                    <th className="px-3 py-4 text-left">
+                                        Status
+                                    </th>
 
                                     <th className="p-3 text-left">Date</th>
 
@@ -91,7 +82,7 @@ const MobileTodos: FC<TodosProps> = (props) => {
                             </thead>
                             <tbody className="flex-1 bg-white sm:flex-none">
                                 <tr className="flex flex-col h-full flex-nowrap sm:table-row sm:mb-0">
-                                    <td className="p-2 text-sm border-b border-l whitespace-nowrap">
+                                    <td className="p-2 text-sm border-b border-l ">
                                         <input
                                             className="w-3.5 h-3.5 mr-2 align-middle"
                                             type="checkbox"
@@ -118,8 +109,8 @@ const MobileTodos: FC<TodosProps> = (props) => {
                                             className={`capitalize text-sm rounded-full px-3 py-1.5 text-gray-50 whitespace-nowrap shadow hover:shadow-lg
                                         ${
                                             todo.isPaused
-                                                ? "bg-webOrange"
-                                                : "bg-easternBlue"
+                                                ? "bg-webOrange hover:bg-webOrange_light"
+                                                : "bg-easternBlue hover:bg-easternBlue_light"
                                         }`}
                                             onClick={() =>
                                                 handleStatusChange(todo.id)
@@ -130,13 +121,13 @@ const MobileTodos: FC<TodosProps> = (props) => {
                                                 : "in progress"}
                                         </button>
                                     </td>
-                                    <td className="p-3 pl-0 text-sm font-semibold border-b border-l">
+                                    <td className="p-3 text-sm font-semibold border-b border-l">
                                         <MyDatePicker
                                             todo={todo}
                                             handleDateChange={handleDateChange}
                                         />
                                     </td>
-                                    <td className="p-3 pl-0 text-sm font-semibold border-b border-l">
+                                    <td className="p-3 text-sm font-semibold border-b border-l">
                                         <MyTimePicker
                                             todo={todo}
                                             handleTimeChange={handleTimeChange}
