@@ -49,7 +49,7 @@ const Modal: FC<ModalProps> = (props) => {
 
     const handleAddNewTask: HandleAddNewTask = (task) => {
         dispatch(addNewTodo(task));
-        dispatch(setAlert("info", "Task added successfully!", "info"));
+        dispatch(setAlert("success", "Task added successfully!", "success"));
     };
 
     return (
