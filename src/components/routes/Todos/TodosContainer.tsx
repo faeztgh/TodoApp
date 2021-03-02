@@ -77,11 +77,13 @@ const TodosContainer: FC = () => {
     //change time
     const handleTimeChange: HandleTimeChange = (id, time) => {
         dispatch(changeTodoTime(id, time));
+        dispatch(setAlert("info", "Time changed!", "info"));
     };
 
     // change date
     const handleDateChange: HandleDateChange = (id, date) => {
         dispatch(changeTodoDate(id, date));
+        dispatch(setAlert("info", "Date changed!", "info"));
     };
 
     // change isDone state
