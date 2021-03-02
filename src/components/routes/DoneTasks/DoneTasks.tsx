@@ -16,13 +16,13 @@ const DoneTasks: FC<DoneTasksProps> = (props) => {
 
     return (
         <>
-            <table className="w-full divide-y divide-gray-200">
+            <table className="w-5/6 m-auto divide-y divide-gray-200">
                 <thead className="bg-white border-t ">
                     <tr>
                         <th></th>
 
-                        <th className="cursor-pointer" onClick={sort}>
-                            <span className="flex px-3 py-1 font-semibold">
+                        <th className="pl-0 cursor-pointer" onClick={sort}>
+                            <span className="flex px-1 py-1 font-semibold">
                                 Tasks
                                 {isAsc ? (
                                     <BiDownArrow
@@ -55,14 +55,14 @@ const DoneTasks: FC<DoneTasksProps> = (props) => {
                                         onChange={() => handleIsDone(todo.id)}
                                     />
                                 </td>
-                                <td className="w-1/3 py-1 pl-1 font-normal text-gray-400 md:w-min sm:font-semibold">
+                                <td className="py-1 font-normal text-gray-400 w-max sm:font-semibold">
                                     {todo.title}
                                 </td>
 
-                                <td className="font-normal text-gray-400">
+                                <td className="pl-0 font-normal text-gray-400 w-max">
                                     <MyDatePicker todo={todo} disabled={true} />
                                 </td>
-                                <td className="font-normal text-gray-400">
+                                <td className="pl-0 font-normal text-gray-400 w-max">
                                     <MyTimePicker todo={todo} disabled={true} />
                                 </td>
                             </tr>

@@ -7,13 +7,16 @@ const DoneTasks = lazy(() => import("./DoneTasks"));
 const MobileDoneTasks = lazy(() => import("./MobileDoneTasks"));
 
 const DoneTasksContainer: FC = () => {
+    //states
     const [isAsc, setIsAsc] = useState(false);
+    const [isMobile, setIsMobile] = useState<boolean>();
+    // get todos
     let todos: Todo[] = useSelector((state: RootState) => state.todos);
     todos = todos.filter((todo) => todo.isDone);
 
-    const [isMobile, setIsMobile] = useState<boolean>();
     const dispatch = useDispatch();
 
+    // handle mobile view
     const handleIsMobile = () => {
         if (window.innerWidth < 640) {
             setIsMobile(true);
@@ -21,6 +24,7 @@ const DoneTasksContainer: FC = () => {
             setIsMobile(false);
         }
     };
+
     useEffect(() => {
         handleIsMobile();
         window.addEventListener("resize", handleIsMobile);
@@ -31,6 +35,7 @@ const DoneTasksContainer: FC = () => {
         };
     }, []);
 
+    // sort
     const sort = () => {
         setIsAsc(!isAsc);
         handleSort(isAsc, true);
@@ -40,6 +45,7 @@ const DoneTasksContainer: FC = () => {
         dispatch(sortTodos(isAsc, isDone));
     };
 
+    // is done
     const handleIsDone: HandleIsDone = (id) => {
         dispatch(changeTodoIsDone(id));
     };

@@ -17,7 +17,7 @@ const FilterGroupButton: FC<FilterGroupButtonProps> = (props) => {
                 <div className="flex m-2 text-gray-600">
                     <button
                         onClick={() => handleFilter("month")}
-                        className={`flex hover:bg-gray-100 justify-center px-4 py-2 text-base font-semibold transition duration-200 ease-in-out border rounded rounded-l-none cursor-pointer hover:scale-110 focus:outline-none ${
+                        className={`rounded-l-none filterGroup-btn ${
                             selectedFilter === "month" ? active : deActive
                         }`}
                     >
@@ -25,7 +25,7 @@ const FilterGroupButton: FC<FilterGroupButtonProps> = (props) => {
                     </button>
                     <button
                         onClick={() => handleFilter("week")}
-                        className={`flex hover:bg-gray-100 justify-center px-4 py-2 text-base font-semibold transition duration-200 ease-in-out border border-l-0 border-r-0 rounded rounded-l-none rounded-r-none cursor-pointer hover:scale-110 focus:outline-none ${
+                        className={`filterGroup-btn border-l-0 border-r-0 rounded-l-none rounded-r-none ${
                             selectedFilter === "week" ? active : deActive
                         }`}
                     >
@@ -33,7 +33,7 @@ const FilterGroupButton: FC<FilterGroupButtonProps> = (props) => {
                     </button>
                     <button
                         onClick={() => handleFilter("day")}
-                        className={`flex hover:bg-gray-100 justify-center px-4 py-2 text-base font-semibold transition duration-200 ease-in-out border rounded rounded-r-none cursor-pointer hover:scale-110 focus:outline-none ${
+                        className={`filterGroup-btn rounded-r-none ${
                             selectedFilter === "day" ? active : deActive
                         }`}
                     >

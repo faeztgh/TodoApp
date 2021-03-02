@@ -1,7 +1,6 @@
 import React, { FC, useRef, useState } from "react";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { CgPlayListCheck } from "react-icons/cg";
-import { MdTitle } from "react-icons/md";
 import { BsCalendar } from "react-icons/bs";
 import { BiTime } from "react-icons/bi";
 import DatePicker from "react-datepicker";
@@ -67,9 +66,6 @@ const Modal: FC<ModalProps> = (props) => {
                                 </div>
                                 <div className="relative items-stretch flex-auto w-full px-3 py-6 mx-auto my-4 mb-3 sm:p-6">
                                     <div>
-                                        <span className="absolute z-10 items-center justify-center pt-2.5 pl-2 text-base font-normal leading-snug text-center text-gray-400 bg-transparent rounded top-14">
-                                            <MdTitle size="1.5em" />
-                                        </span>
                                         <label
                                             htmlFor="newTaskInput"
                                             className="flex mb-1 text-lg font-semibold text-gray-600 capitalize"
@@ -81,7 +77,7 @@ const Modal: FC<ModalProps> = (props) => {
                                             New Task
                                         </label>
                                         <input
-                                            className="relative w-5/6 px-1 py-2 pl-10 text-base text-gray-500 placeholder-gray-400 bg-gray-100 rounded shadow outline-none sm:w-full sm:text-lg focus:bg-white focus:outline-none focus:shadow-lg"
+                                            className="modal-newTask-input"
                                             type="text"
                                             placeholder="Add New Task"
                                             id="newTaskInput"
@@ -160,7 +156,7 @@ const Modal: FC<ModalProps> = (props) => {
 
                                 <div className="flex items-center justify-end p-6 border-t border-gray-300 border-solid rounded-b">
                                     <button
-                                        className="px-2 py-2 mb-1 mr-1 text-sm font-bold uppercase outline-none focus:border-transparent sm:px-6 text-carnationRed background-transparent focus:outline-none"
+                                        className="modal-close-btn"
                                         type="button"
                                         style={{ transition: "all .15s ease" }}
                                         onClick={() => setShowModal(false)}
@@ -168,7 +164,7 @@ const Modal: FC<ModalProps> = (props) => {
                                         Close
                                     </button>
                                     <button
-                                        className={`sm:px-6 px-2  py-3 whitespace-nowrap mb-1 mr-1 text-sm font-bold text-white uppercase rounded shadow outline-none bg-cornFlowerBlue hover:bg-cornFlowerBlue_light active:bg-green-600 hover:shadow-lg focus:outline-none ${
+                                        className={`modal-addTask-btn ${
                                             taskTitleInput.trim() !== ""
                                                 ? ""
                                                 : "opacity-50"
@@ -182,7 +178,7 @@ const Modal: FC<ModalProps> = (props) => {
                                                 : false
                                         }
                                     >
-                                        Save Changes
+                                        Add Task
                                     </button>
                                 </div>
                             </div>

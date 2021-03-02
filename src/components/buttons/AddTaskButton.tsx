@@ -10,7 +10,7 @@ const AddTaskButton: FC<AddTaskButtonProps> = (props) => {
     return (
         <>
             <button
-                className="flex pl-1 justify-around shadow-md px-2 py-1.5 ml-auto bg-cornFlowerBlue hover:bg-cornFlowerBlue_light rounded text-gray-50 self-start whitespace-nowrap text-sm sm:text-base"
+                className="addTask-btn"
                 onClick={() => setShowModal(!showModal)}
             >
                 <BsPlus size="1.5em" />

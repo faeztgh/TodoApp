@@ -13,7 +13,7 @@ const Tabs: FC = () => {
         <>
             <ul className="flex border-b list-reset">
                 <li
-                    className={`mr-1 -mb-px  whitespace-nowrap text-sm sm:text-base border-t border-l border-r rounded-t cursor-pointer
+                    className={`tabs-listItem
                         ${openTab === 1 ? active : deActive}`}
                 >
                     <Link
@@ -30,7 +30,7 @@ const Tabs: FC = () => {
                     </Link>
                 </li>
                 <li
-                    className={`mr-1  whitespace-nowrap text-sm sm:text-base -mb-px border-t border-l border-r rounded-t cursor-pointer
+                    className={`tabs-listItem
                         ${openTab === 2 ? active : deActive}`}
                 >
                     <Link

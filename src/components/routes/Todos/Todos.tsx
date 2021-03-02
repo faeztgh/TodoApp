@@ -37,7 +37,7 @@ const Todos: FC<TodosProps> = (props) => {
 
     return (
         <>
-            <table className="w-1/6 divide-y divide-gray-200 table-auto xl:w-full lg:w-full">
+            <table className="m-auto divide-y divide-gray-200 table-auto xl:w-full lg:w-full">
                 <thead className="bg-white border-t ">
                     <tr>
                         <th></th>
@@ -65,7 +65,7 @@ const Todos: FC<TodosProps> = (props) => {
 
                         <th>Time</th>
 
-                        <th>Operations</th>
+                        <th className="text-center">Operations</th>
                     </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -82,7 +82,7 @@ const Todos: FC<TodosProps> = (props) => {
                                 </td>
                                 <td>
                                     <input
-                                        className="w-5/6 px-2 py-1 font-semibold text-gray-800 md:w-min"
+                                        className="w-full px-2 py-1 font-semibold text-gray-800"
                                         type="text"
                                         ref={handleAddRefsToTaskTitleRefs}
                                         defaultValue={todo.title}
@@ -96,7 +96,7 @@ const Todos: FC<TodosProps> = (props) => {
                                 </td>
                                 <td>
                                     <button
-                                        className={`capitalize rounded-full px-3 py-1.5 text-gray-50 whitespace-nowrap
+                                        className={`capitalize rounded-full px-3 mr-2 py-1.5 text-gray-50 whitespace-nowrap
                                            ${
                                                todo.isPaused
                                                    ? "bg-webOrange hover:bg-webOrange_light"
@@ -111,13 +111,13 @@ const Todos: FC<TodosProps> = (props) => {
                                             : "in progress"}
                                     </button>
                                 </td>
-                                <td>
+                                <td className="pl-0">
                                     <MyDatePicker
                                         todo={todo}
                                         handleDateChange={handleDateChange}
                                     />
                                 </td>
-                                <td>
+                                <td className="pl-0">
                                     <MyTimePicker
                                         todo={todo}
                                         handleTimeChange={handleTimeChange}
@@ -125,7 +125,7 @@ const Todos: FC<TodosProps> = (props) => {
                                 </td>
                                 <td className="flex justify-around">
                                     <button
-                                        className="text-cornFlowerBlue cornFlowerBlue_light focus:outline-none"
+                                        className="text-cornFlowerBlue focus:border-transparent cornFlowerBlue_light focus:outline-none"
                                         onClick={() =>
                                             handleClickOnEdit(todo.title)
                                         }
@@ -133,7 +133,7 @@ const Todos: FC<TodosProps> = (props) => {
                                         <FaPencilAlt size="1.2em" />
                                     </button>
                                     <button
-                                        className="text-carnationRed focus:outline-none"
+                                        className="text-carnationRed focus:border-transparent focus:outline-none"
                                         onClick={() =>
                                             handleRemoveTodo(todo.id)
                                         }

@@ -22,7 +22,7 @@ const Error: FC = () => {
                             have moved.
                         </div>
                         <Link
-                            className="p-4 font-semibold text-white transition-all duration-300 bg-indigo-700 border border-gray-800 rounded shadow-lg hover:shadow-xl hover:bg-indigo-600"
+                            className="goBackHome-btn"
                             to="/"
                         >
                             Go Home

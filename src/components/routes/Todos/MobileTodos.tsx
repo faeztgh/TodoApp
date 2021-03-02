@@ -106,12 +106,11 @@ const MobileTodos: FC<TodosProps> = (props) => {
                                     </td>
                                     <td className="p-2 border-b border-l ">
                                         <button
-                                            className={`capitalize text-sm rounded-full px-3 py-1.5 text-gray-50 whitespace-nowrap shadow hover:shadow-lg
-                                        ${
-                                            todo.isPaused
-                                                ? "bg-webOrange hover:bg-webOrange_light"
-                                                : "bg-easternBlue hover:bg-easternBlue_light"
-                                        }`}
+                                            className={`status-btn${
+                                                todo.isPaused
+                                                    ? "bg-webOrange hover:bg-webOrange_light"
+                                                    : "bg-easternBlue hover:bg-easternBlue_light"
+                                            }`}
                                             onClick={() =>
                                                 handleStatusChange(todo.id)
                                             }

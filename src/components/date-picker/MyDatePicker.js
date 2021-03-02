@@ -8,7 +8,7 @@ const MyDatePicker = (props) => {
     return (
         <>
             <DatePicker
-                className="pl-2 font-semibold w-36 md:min-w-min"
+                className="px-1 font-semibold w-36 md:min-w-min"
                 selected={startDate}
                 onChange={(date) => handleDateChange(todo.id, date)}
                 disabled={disabled}
