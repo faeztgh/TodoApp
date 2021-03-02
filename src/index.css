@@ -10,11 +10,17 @@ td {
 }
 
 button:focus {
-    @apply border-ribbonBlue border-solid outline-none sm:border;
+    @apply outline-none;
 }
 
 input:focus {
     @apply border-ribbonBlue border-solid outline-none border sm:border-2 rounded;
+}
+
+@layer components {
+    .alert-container {
+        @apply text-white sm:flex text-sm z-50 sm:text-lg sm:px-6 sm:py-2.5 px-2 py-2 shadow-2xl border-0 rounded fixed mb-4 bottom-0 right-5;
+    }
 }
 
 @tailwind utilities;
