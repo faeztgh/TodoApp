@@ -1,39 +1,37 @@
 import React, { FC, lazy, useEffect, useRef, useState } from "react";
-interface TodosContainerProps {
-    todos: Array<Todo>;
-    handleEditTitle: HandleEditTitle;
-    handleStatusChange: HandleStatusChange;
-    handleRemoveTodo: HandleRemoveTodo;
-    handleDateChange: HandleDateChange;
-    handleTimeChange: HandleTimeChange;
-    handleSort: HandleSort;
-    handleIsDone: HandleIsDone;
-    handleFilter: HandleFilter;
-    selectedFilter: string;
-}
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../redux/reducers/AllReducers";
+
+import {
+    changeTodoDate,
+    changeTodoIsDone,
+    changeTodoStatusAction,
+    changeTodoTime,
+    editTaskTitleAction,
+    removeTodoAction,
+    setAlert,
+    sortTodos,
+} from "../../../redux/actions/Actions";
 
 const MobileTodos = lazy(() => import("./MobileTodos"));
 const Todos = lazy(() => import("./Todos"));
 
-const TodosContainer: FC<TodosContainerProps> = (props) => {
-    const {
-        todos,
-        handleEditTitle,
-        handleDateChange,
-        handleRemoveTodo,
-        handleStatusChange,
-        handleTimeChange,
-        handleSort,
-        handleIsDone,
-        handleFilter,
-        selectedFilter,
-    } = props;
-
+const TodosContainer: FC = () => {
+    //states
     const [isMobile, setIsMobile] = useState<boolean>();
     const [isAsc, setIsAsc] = useState(false);
+
+    //refs
     const taskTitleRefs = useRef<HTMLInputElement[]>([]);
     taskTitleRefs.current = [];
 
+    //getting todos
+    let todos: Todo[] = useSelector((state: RootState) => state.todos);
+    todos = todos.filter((todo) => !todo.isDone);
+
+    const dispatch = useDispatch();
+
+    // handle isMobile
     const handleIsMobile = () => {
         if (window.innerWidth < 640) {
             setIsMobile(true);
@@ -51,12 +49,14 @@ const TodosContainer: FC<TodosContainerProps> = (props) => {
         };
     }, []);
 
+    // make array of titleRefs
     const handleAddRefsToTaskTitleRefs = (input: HTMLInputElement) => {
         if (input && !taskTitleRefs.current.includes(input)) {
             taskTitleRefs.current.push(input);
         }
     };
 
+    // focus on title input
     const handleClickOnEdit = (title: string) => {
         taskTitleRefs.current.forEach((el: HTMLInputElement) => {
             if (el.value === title) {
@@ -65,9 +65,56 @@ const TodosContainer: FC<TodosContainerProps> = (props) => {
         });
     };
 
+    // sort
+    const handleSort: HandleSort = (isAsc, isDone) => {
+        dispatch(sortTodos(isAsc, isDone));
+    };
+
     const sort = () => {
         setIsAsc(!isAsc);
         handleSort(isAsc, false);
+    };
+    //change time
+    const handleTimeChange: HandleTimeChange = (id, time) => {
+        dispatch(changeTodoTime(id, time));
+    };
+
+    // change date
+    const handleDateChange: HandleDateChange = (id, date) => {
+        dispatch(changeTodoDate(id, date));
+    };
+
+    // change isDone state
+    const handleIsDone: HandleIsDone = (id) => {
+        dispatch(changeTodoIsDone(id));
+    };
+
+    // change status
+    const handleStatusChange: HandleStatusChange = (id) => {
+        dispatch(changeTodoStatusAction(id));
+    };
+
+    // remove todo
+    const handleRemoveTodo: HandleRemoveTodo = (id) => {
+        dispatch(removeTodoAction(id));
+        dispatch(setAlert("warning", "Todo removed!", "warning"));
+    };
+
+    // Edit title
+    const handleEditTitle: HandleEditTitle = (newTitle, id) => {
+        const todo = todos.find((todo) => todo.id === id);
+        if (newTitle.trim() !== "") {
+            if (todo?.title !== newTitle.trim()) {
+                dispatch(editTaskTitleAction(id, newTitle));
+                dispatch(
+                    setAlert("success", "Title edited successfully!", "success")
+                );
+            }
+        } else {
+            dispatch(
+                setAlert("danger", "You can't leave title empty!", "Error")
+            );
+        }
     };
 
     return (
@@ -81,9 +128,7 @@ const TodosContainer: FC<TodosContainerProps> = (props) => {
                     handleDateChange={handleDateChange}
                     handleTimeChange={handleTimeChange}
                     handleEditTitle={handleEditTitle}
-                    selectedFilter={selectedFilter}
                     handleIsDone={handleIsDone}
-                    handleFilter={handleFilter}
                     todos={todos}
                     isAsc={isAsc}
                     sort={sort}
@@ -97,9 +142,7 @@ const TodosContainer: FC<TodosContainerProps> = (props) => {
                     handleDateChange={handleDateChange}
                     handleTimeChange={handleTimeChange}
                     handleEditTitle={handleEditTitle}
-                    selectedFilter={selectedFilter}
                     handleIsDone={handleIsDone}
-                    handleFilter={handleFilter}
                     todos={todos}
                     isAsc={isAsc}
                     sort={sort}

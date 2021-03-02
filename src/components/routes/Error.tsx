@@ -1,7 +1,7 @@
-import React from "react";
+import React, { FC } from "react";
 import { Link } from "react-router-dom";
 
-const Error = () => {
+const Error: FC = () => {
     return (
         <>
             <div className="flex items-center max-h-screen mt-32 text-gray-800">

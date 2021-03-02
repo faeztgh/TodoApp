@@ -5,20 +5,15 @@ import Modal from "./Modal";
 interface AddTaskProps {
     showModal: boolean;
     setShowModal: SetShowModal;
-    handleAddNewTask: HandleAddNewTask;
 }
 
 const AddTask: FC<AddTaskProps> = (props) => {
-    const { setShowModal, showModal, handleAddNewTask } = props;
+    const { setShowModal, showModal } = props;
 
     return (
         <>
             <AddTaskButton setShowModal={setShowModal} showModal={showModal} />
-            <Modal
-                setShowModal={setShowModal}
-                showModal={showModal}
-                handleAddNewTask={handleAddNewTask}
-            />
+            <Modal setShowModal={setShowModal} showModal={showModal} />
         </>
     );
 };

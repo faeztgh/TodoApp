@@ -2,30 +2,28 @@ import React, { FC } from "react";
 import { FaPencilAlt } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import "react-datepicker/dist/react-datepicker.css";
-import FilterGroupButton from "../../buttons/FilterGroupButton";
-import MyDatePicker from "../../MyDatePicker";
-import MyTimePicker from "../../MyTimePicker";
+import MyDatePicker from "../../date-picker/MyDatePicker";
 import { BiUpArrow, BiDownArrow } from "react-icons/bi";
+import MyTimePicker from "../../date-picker/MyTimePicker";
 
 interface TodosProps {
     todos: Array<Todo>;
-    selectedFilter: string;
     isAsc: boolean;
-    handleEditTitle: HandleEditTitle;
+    handleAddRefsToTaskTitleRefs: handleAddRefsToTaskTitleRefs;
     handleStatusChange: HandleStatusChange;
+    handleClickOnEdit: HandleClickOnEdit;
     handleRemoveTodo: HandleRemoveTodo;
     handleDateChange: HandleDateChange;
     handleTimeChange: HandleTimeChange;
+    handleEditTitle: HandleEditTitle;
     handleIsDone: HandleIsDone;
-    handleFilter: HandleFilter;
-    handleAddRefsToTaskTitleRefs: handleAddRefsToTaskTitleRefs;
-    handleClickOnEdit: HandleClickOnEdit;
     sort: Sort;
 }
 
 const Todos: FC<TodosProps> = (props) => {
     const {
         todos,
+        isAsc,
         handleAddRefsToTaskTitleRefs,
         handleClickOnEdit,
         handleEditTitle,
@@ -34,20 +32,11 @@ const Todos: FC<TodosProps> = (props) => {
         handleStatusChange,
         handleTimeChange,
         handleIsDone,
-        handleFilter,
         sort,
-        isAsc,
-        selectedFilter,
     } = props;
 
     return (
         <>
-            <div className="flex py-7" dir="rtl">
-                <FilterGroupButton
-                    handleFilter={handleFilter}
-                    selectedFilter={selectedFilter}
-                />
-            </div>
             <table className="w-1/6 divide-y divide-gray-200 table-auto xl:w-full lg:w-full">
                 <thead className="bg-white border-t ">
                     <tr>
@@ -110,8 +99,8 @@ const Todos: FC<TodosProps> = (props) => {
                                         className={`capitalize rounded-full px-3 py-1.5 text-gray-50 whitespace-nowrap
                                            ${
                                                todo.isPaused
-                                                   ? "bg-webOrange"
-                                                   : "bg-easternBlue"
+                                                   ? "bg-webOrange hover:bg-webOrange_light"
+                                                   : "bg-easternBlue hover:bg-easternBlue_light"
                                            }`}
                                         onClick={() =>
                                             handleStatusChange(todo.id)
@@ -136,7 +125,7 @@ const Todos: FC<TodosProps> = (props) => {
                                 </td>
                                 <td className="flex justify-around">
                                     <button
-                                        className="text-cornFlowerBlue focus:outline-none"
+                                        className="text-cornFlowerBlue cornFlowerBlue_light focus:outline-none"
                                         onClick={() =>
                                             handleClickOnEdit(todo.title)
                                         }

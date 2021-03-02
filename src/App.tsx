@@ -1,9 +1,11 @@
-import moment from "moment";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import FilterGroupButton from "./components/buttons/FilterGroupButton";
 import React, { lazy, Suspense, useEffect, useState } from "react";
-import { Route, Switch } from "react-router-dom";
-import Alert from "./components/Alert";
+import { RootState } from "./redux/reducers/AllReducers";
+import { useDispatch, useSelector } from "react-redux";
+import { filterTodos } from "./redux/actions";
 import Loading from "./components/Loading";
-import { Data } from "./data/data";
+import Alert from "./components/Alert";
 
 const DoneTasksContainer = lazy(() => import("./components/routes/DoneTasks"));
 const TodosContainer = lazy(() => import("./components/routes/Todos"));
@@ -11,224 +13,77 @@ const Error = lazy(() => import("./components/routes/Error"));
 const Tabs = lazy(() => import("./components/Tabs"));
 
 function App() {
-    const [todos, setTodos] = useState<Todo[]>(Data);
-    const [unDoneTodos, setUnDoneTodos] = useState<Todo[]>([]);
-    const [doneTodos, setDoneTodos] = useState<Todo[]>([]);
+    const todos: Todo[] = useSelector((state: RootState) => state.todos);
+    const dispatch = useDispatch();
+
+    // Alert
+    const alert = useSelector((state: RootState) => state.alert);
     const [showAlert, setShowAlert] = useState(false);
-    const [selectedFilter, setSelectedFilter] = useState("");
-    const [alertDetails, setAlertDetails] = useState<AlertDetails>({
-        color: "",
-        message: "",
-        type: "",
-    });
-    const [showModal, setShowModal] = useState(false);
+    const handleShowAlert = () => {
+        if (alert.message !== "") {
+            setShowAlert(true);
+            setTimeout(() => {
+                setShowAlert(false);
+            }, 5000);
+        }
+    };
 
     useEffect(() => {
-        // initial each of these statce anytime todo changed
-        setUnDoneTodos(todos.filter((todo) => !todo.isDone));
-        setDoneTodos(todos.filter((todo) => todo.isDone));
-    }, [todos]);
+        handleShowAlert();
 
-    const handleStatusChange: HandleStatusChange = (id) => {
-        const newTodos = todos.map((todo) => {
-            if (todo.id === id) {
-                return {
-                    ...todo,
-                    isPaused: !todo.isPaused,
-                };
-            }
-            return todo;
-        });
-        setTodos(newTodos);
-    };
-
-    const handleIsDone: HandleIsDone = (id) => {
-        const newTodos = todos.map((todo) => {
-            if (todo.id === id) {
-                return {
-                    ...todo,
-                    isDone: !todo.isDone,
-                };
-            }
-            return todo;
-        });
-
-        setTodos(newTodos);
-    };
-
-    const handleEditTitle: HandleEditTitle = (newTitle, id) => {
-        const editedTodos = todos.map((todo) => {
-            if (todo.id === id) {
-                if (todo.title !== newTitle) {
-                    setAlertDetails({
-                        color: "success",
-                        type: "Success",
-                        message: "Todo title changed successfully!",
-                    });
-                    // showing alert for 5 second
-                    handleAlert();
-
-                    return {
-                        ...todo,
-                        title: newTitle,
-                    };
-                }
-            }
-            return todo;
-        });
-        setTodos(editedTodos);
-    };
-
-    const handleDateChange: HandleDateChange = (id, date) => {
-        const editedTodos = todos.map((todo) => {
-            if (todo.id === id) {
-                return {
-                    ...todo,
-                    date: date,
-                };
-            }
-            return todo;
-        });
-        setTodos(editedTodos);
-    };
-
-    const handleAlert: HandleAlert = () => {
-        setShowAlert(!showAlert);
-        setTimeout(() => {
+        return () => {
             setShowAlert(false);
-        }, 5000);
-    };
-
-    const handleTimeChange: HandleTimeChange = (id, time) => {
-        const editedTodos = todos.map((todo) => {
-            if (todo.id === id) {
-                return {
-                    ...todo,
-                    time: time,
-                };
-            }
-            return todo;
-        });
-        setTodos(editedTodos);
-    };
-    const handleAddNewTask: HandleAddNewTask = (task) => {
-        // specify the new task id
-        const id = todos.length === 0 ? 0 : todos[todos.length - 1].id + 1;
-        task = { id: id, ...task };
-        setTodos([...todos, task]);
-        setAlertDetails({
-            color: "info",
-            type: "Info",
-            message: "Todo Added Successfully!",
-        });
-        handleAlert();
-    };
-
-    const handleRemoveTodo: HandleRemoveTodo = (id) => {
-        setTodos(todos.filter((todo) => todo.id !== id));
-
-        setAlertDetails({
-            color: "warning",
-            type: "Warning",
-            message: "Todo Removed!",
-        });
-        handleAlert();
-    };
-
-    const handleSort: HandleSort = (isAsc, isDone) => {
-        const sorted = () => {
-            if (isAsc) {
-                if (!isDone) {
-                    return unDoneTodos.sort((a, b) =>
-                        a.title > b.title ? 1 : b.title > a.title ? -1 : 0
-                    );
-                } else {
-                    return doneTodos.sort((a, b) =>
-                        a.title > b.title ? 1 : b.title > a.title ? -1 : 0
-                    );
-                }
-            } else {
-                if (isDone) {
-                    return doneTodos.sort((a, b) =>
-                        a.title < b.title ? 1 : b.title < a.title ? -1 : 0
-                    );
-                } else {
-                    return unDoneTodos.sort((a, b) =>
-                        a.title < b.title ? 1 : b.title < a.title ? -1 : 0
-                    );
-                }
-            }
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [alert]);
 
-        isDone ? setDoneTodos(sorted) : setUnDoneTodos(sorted);
+    const closeAlert = () => {
+        setShowAlert(false);
     };
 
+    // filter
+    const [selectedFilter, setSelectedFilter] = useState("");
     const handleFilter: HandleFilter = (state) => {
         setSelectedFilter(state);
-        const now = moment();
-        let filteredTodos: Todo[] = [];
-        todos.forEach((todo) => {
-            if (moment(todo.date).diff(now, state) === 0) {
-                filteredTodos = [...filteredTodos, todo];
-            }
-        });
-        setDoneTodos(filteredTodos.filter((todo) => todo.isDone));
-        setUnDoneTodos(filteredTodos.filter((todo) => !todo.isDone));
+        dispatch(filterTodos(state));
     };
 
     return (
         <>
-            <div className="m-2.5 lg:m-32 md:m-20">
-                <Suspense fallback={<Loading count={todos.length} />}>
-                    <Tabs
-                        handleAddNewTask={handleAddNewTask}
-                        setShowModal={setShowModal}
-                        showModal={showModal}
-                    />
+            <Router>
+                <div className="m-2.5 lg:m-32 md:m-20">
+                    <Suspense fallback={<Loading count={todos.length} />}>
+                        <Tabs />
+                        <div className="flex py-7" dir="rtl">
+                            <FilterGroupButton
+                                handleFilter={handleFilter}
+                                selectedFilter={selectedFilter}
+                            />
+                        </div>
+                        <Switch>
+                            <Route
+                                path="/"
+                                exact
+                                component={() => <TodosContainer />}
+                            />
+                            <Route
+                                path="/donetasks"
+                                component={() => <DoneTasksContainer />}
+                            />
+                            <Route path="/*" component={() => <Error />} />
+                        </Switch>
 
-                    {showAlert && (
-                        <Alert
-                            color={alertDetails.color}
-                            message={alertDetails.message}
-                            type={alertDetails.type}
-                            handleAlert={handleAlert}
-                        />
-                    )}
-
-                    <Switch>
-                        <Route
-                            path="/"
-                            exact
-                            component={() => (
-                                <TodosContainer
-                                    todos={unDoneTodos}
-                                    handleEditTitle={handleEditTitle}
-                                    handleStatusChange={handleStatusChange}
-                                    handleRemoveTodo={handleRemoveTodo}
-                                    handleDateChange={handleDateChange}
-                                    handleTimeChange={handleTimeChange}
-                                    handleSort={handleSort}
-                                    handleIsDone={handleIsDone}
-                                    handleFilter={handleFilter}
-                                    selectedFilter={selectedFilter}
-                                />
-                            )}
-                        />
-
-                        <Route
-                            path="/donetasks"
-                            component={() => (
-                                <DoneTasksContainer
-                                    todos={doneTodos}
-                                    handleSort={handleSort}
-                                    handleIsDone={handleIsDone}
-                                />
-                            )}
-                        />
-                        <Route path="/*" component={() => <Error />} />
-                    </Switch>
-                </Suspense>
-            </div>
+                        {showAlert && (
+                            <Alert
+                                color={alert.color}
+                                message={alert.message}
+                                type={alert.type}
+                                closeAlert={closeAlert}
+                            />
+                        )}
+                    </Suspense>
+                </div>
+            </Router>
         </>
     );
 }

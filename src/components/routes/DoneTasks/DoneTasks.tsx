@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import { BiDownArrow, BiUpArrow } from "react-icons/bi";
 
-import MyDatePicker from "../../MyDatePicker";
-import MyTimePicker from "../../MyTimePicker";
+import MyDatePicker from "../../date-picker/MyDatePicker";
+import MyTimePicker from "../../date-picker/MyTimePicker";
 
 interface DoneTasksProps {
     todos: Todo[];
@@ -16,7 +16,7 @@ const DoneTasks: FC<DoneTasksProps> = (props) => {
 
     return (
         <>
-            <table className="w-full mt-20 divide-y divide-gray-200">
+            <table className="w-full divide-y divide-gray-200">
                 <thead className="bg-white border-t ">
                     <tr>
                         <th></th>

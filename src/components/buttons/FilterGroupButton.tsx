@@ -11,7 +11,6 @@ const FilterGroupButton: FC<FilterGroupButtonProps> = (props) => {
     const active = "text-ribbonBlue bg-white";
     const deActive = "text-gray-600 bg-gray-50";
 
-
     return (
         <>
             <div className="flex flex-wrap items-baseline justify-center">

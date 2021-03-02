@@ -5,35 +5,39 @@ import { MdTitle } from "react-icons/md";
 import { BsCalendar } from "react-icons/bs";
 import { BiTime } from "react-icons/bi";
 import DatePicker from "react-datepicker";
+import { addNewTodo, setAlert } from "../redux/actions/Actions";
+import { useDispatch } from "react-redux";
 
 interface ModalProps {
     showModal: boolean;
     setShowModal: SetShowModal;
-    handleAddNewTask: HandleAddNewTask;
 }
 
 const Modal: FC<ModalProps> = (props) => {
-    const { showModal, setShowModal, handleAddNewTask } = props;
-    const [isValidInput, setIsValidInput] = useState(false);
-    const startDate = new Date();
+    const { showModal, setShowModal } = props;
+
+    const dispatch = useDispatch();
+
+    const [taskTitleInput, setTaskTitleInput] = useState("");
     const [chosenDate, setChosenDate] = useState<Date>(new Date());
     const [chosenTime, setChosenTime] = useState<Date>(new Date());
 
-    const taskTitle = useRef<HTMLInputElement>(null);
     const taskStatus = useRef<HTMLSelectElement>(null);
 
     const handleNewTask = () => {
         const newTask = {
-            title: taskTitle.current?.value,
-            isPaused: taskStatus.current?.value,
+            title: taskTitleInput,
+            isPaused: taskStatus.current?.value === "true" ? true : false,
             isDone: false,
             date: chosenDate,
             time: chosenTime,
         };
-        if (isValidInput) {
+
+        if (taskTitleInput.trim() !== "") {
             handleAddNewTask(newTask);
             setShowModal(false);
         }
+        setTaskTitleInput("");
     };
 
     const handleAddDate = (date: Date) => {
@@ -42,6 +46,11 @@ const Modal: FC<ModalProps> = (props) => {
 
     const handleAddTime = (time: Date) => {
         setChosenTime(time);
+    };
+
+    const handleAddNewTask: HandleAddNewTask = (task) => {
+        dispatch(addNewTodo(task));
+        dispatch(setAlert("info", "Task added successfully!", "info"));
     };
 
     return (
@@ -74,13 +83,12 @@ const Modal: FC<ModalProps> = (props) => {
                                         <input
                                             className="relative w-5/6 px-1 py-2 pl-10 text-base text-gray-500 placeholder-gray-400 bg-gray-100 rounded shadow outline-none sm:w-full sm:text-lg focus:bg-white focus:outline-none focus:shadow-lg"
                                             type="text"
-                                            ref={taskTitle}
                                             placeholder="Add New Task"
                                             id="newTaskInput"
                                             onChange={(e) =>
-                                                e.target.value.trim() !== ""
-                                                    ? setIsValidInput(true)
-                                                    : setIsValidInput(false)
+                                                setTaskTitleInput(
+                                                    e.target.value
+                                                )
                                             }
                                         />
                                     </div>
@@ -120,9 +128,9 @@ const Modal: FC<ModalProps> = (props) => {
                                         <DatePicker
                                             id="taskDate"
                                             className="z-20 px-2 py-1 bg-gray-100 rounded shadow cursor-pointer focus:outline-none"
-                                            selected={startDate}
+                                            selected={chosenDate}
                                             onChange={handleAddDate}
-                                            dateFormat="d  MMMM  yyyy"
+                                            dateFormat="d MMMM yyyy"
                                         />
                                     </div>
                                     <div className="w-full mt-10">
@@ -139,7 +147,7 @@ const Modal: FC<ModalProps> = (props) => {
                                         <DatePicker
                                             id="taskTime"
                                             className="z-20 px-2 py-1 bg-gray-100 rounded shadow cursor-pointer focus:outline-none"
-                                            selected={startDate}
+                                            selected={chosenTime}
                                             onChange={handleAddTime}
                                             showTimeSelect
                                             showTimeSelectOnly
@@ -160,12 +168,19 @@ const Modal: FC<ModalProps> = (props) => {
                                         Close
                                     </button>
                                     <button
-                                        className={`sm:px-6 px-2  py-3 whitespace-nowrap mb-1 mr-1 text-sm font-bold text-white uppercase rounded shadow outline-none bg-cornFlowerBlue active:bg-green-600 hover:shadow-lg focus:outline-none ${
-                                            isValidInput ? "" : "opacity-50"
+                                        className={`sm:px-6 px-2  py-3 whitespace-nowrap mb-1 mr-1 text-sm font-bold text-white uppercase rounded shadow outline-none bg-cornFlowerBlue hover:bg-cornFlowerBlue_light active:bg-green-600 hover:shadow-lg focus:outline-none ${
+                                            taskTitleInput.trim() !== ""
+                                                ? ""
+                                                : "opacity-50"
                                         }`}
                                         type="button"
                                         style={{ transition: "all .15s ease" }}
                                         onClick={handleNewTask}
+                                        disabled={
+                                            taskTitleInput.trim() === ""
+                                                ? true
+                                                : false
+                                        }
                                     >
                                         Save Changes
                                     </button>
