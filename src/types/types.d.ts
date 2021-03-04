@@ -3,14 +3,9 @@ type Todo = {
     title: string;
     isPaused: boolean;
     isDone: boolean;
+    isVisible: boolean;
     date: Date;
     time: Date;
-};
-
-type InitialState = {
-    todos: Todo[];
-    doneTodos: Todo[];
-    unDoneTodos: Todo[];
 };
 
 type handleAddRefsToTaskTitleRefs = (input: HTMLInputElement) => void;
