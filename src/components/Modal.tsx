@@ -28,6 +28,7 @@ const Modal: FC<ModalProps> = (props) => {
             title: taskTitleInput,
             isPaused: taskStatus.current?.value === "true" ? true : false,
             isDone: false,
+            isVisible: true,
             date: chosenDate,
             time: chosenTime,
         };
