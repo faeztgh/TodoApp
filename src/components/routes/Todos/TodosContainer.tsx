@@ -1,6 +1,5 @@
 import React, { FC, lazy, useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../redux/reducers/AllReducers";
+import { useDispatch } from "react-redux";
 
 import {
     changeTodoDate,
@@ -16,7 +15,13 @@ import {
 const MobileTodos = lazy(() => import("./MobileTodos"));
 const Todos = lazy(() => import("./Todos"));
 
-const TodosContainer: FC = () => {
+interface TodosContainerProps {
+    todos: Todo[];
+}
+
+const TodosContainer: FC<TodosContainerProps> = (props) => {
+    const { todos } = props;
+
     //states
     const [isMobile, setIsMobile] = useState<boolean>();
     const [isAsc, setIsAsc] = useState(false);
@@ -26,8 +31,9 @@ const TodosContainer: FC = () => {
     taskTitleRefs.current = [];
 
     //getting todos
-    let todos: Todo[] = useSelector((state: RootState) => state.todos);
-    todos = todos.filter((todo) => !todo.isDone);
+    const undoneTodos = todos.filter(
+        (todo: Todo) => !todo.isDone && todo.isVisible
+    );
 
     const dispatch = useDispatch();
 
@@ -131,7 +137,7 @@ const TodosContainer: FC = () => {
                     handleTimeChange={handleTimeChange}
                     handleEditTitle={handleEditTitle}
                     handleIsDone={handleIsDone}
-                    todos={todos}
+                    todos={undoneTodos}
                     isAsc={isAsc}
                     sort={sort}
                 />
@@ -145,7 +151,7 @@ const TodosContainer: FC = () => {
                     handleTimeChange={handleTimeChange}
                     handleEditTitle={handleEditTitle}
                     handleIsDone={handleIsDone}
-                    todos={todos}
+                    todos={undoneTodos}
                     isAsc={isAsc}
                     sort={sort}
                 />

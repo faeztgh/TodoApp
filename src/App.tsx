@@ -14,6 +14,7 @@ const Tabs = lazy(() => import("./components/Tabs"));
 
 function App() {
     const todos: Todo[] = useSelector((state: RootState) => state.todos);
+
     const dispatch = useDispatch();
 
     // Alert
@@ -24,7 +25,7 @@ function App() {
             setShowAlert(true);
             setTimeout(() => {
                 setShowAlert(false);
-            }, 5000);
+            }, 3000);
         }
     };
 
@@ -64,11 +65,15 @@ function App() {
                             <Route
                                 path="/"
                                 exact
-                                component={() => <TodosContainer />}
+                                component={() => (
+                                    <TodosContainer todos={todos} />
+                                )}
                             />
                             <Route
                                 path="/donetasks"
-                                component={() => <DoneTasksContainer />}
+                                component={() => (
+                                    <DoneTasksContainer todos={todos} />
+                                )}
                             />
                             <Route path="/*" component={() => <Error />} />
                         </Switch>
