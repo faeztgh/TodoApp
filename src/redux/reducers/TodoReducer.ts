@@ -14,7 +14,22 @@ import {
     SORT_TODOS,
 } from "../types";
 
-const initialState: Todo[] = Data;
+// set data to local storage
+const setDataToLS: SetDataToLS = (key, data) => {
+    localStorage.setItem(key, JSON.stringify(data));
+};
+
+// get data from local storage
+const getDataFromLS = (): Todo[] => {
+    if (localStorage.getItem("data")) {
+        return JSON.parse(localStorage.getItem("data") || "[]");
+    } else {
+        localStorage.setItem("data", JSON.stringify(Data));
+        return JSON.parse(localStorage.getItem("data") || "[]");
+    }
+};
+
+const initialState: Todo[] = getDataFromLS();
 
 const todoReducer = (
     state: Todo[] = initialState,
@@ -22,7 +37,7 @@ const todoReducer = (
 ): Todo[] => {
     switch (action.type) {
         case CHANGE_TODO_IS_DONE:
-            return (state = state.map((todo) => {
+            state = state.map((todo) => {
                 if (todo.id === action.payload.id) {
                     return {
                         ...todo,
@@ -30,10 +45,13 @@ const todoReducer = (
                     };
                 }
                 return todo;
-            }));
+            });
+
+            setDataToLS("data", state);
+            return state;
 
         case CHANGE_TODO_STATUS:
-            return state.map((todo) => {
+            state = state.map((todo) => {
                 if (todo.id === action.payload.id) {
                     return {
                         ...todo,
@@ -43,11 +61,16 @@ const todoReducer = (
                 return todo;
             });
 
+            setDataToLS("data", state);
+            return state;
+
         case REMOVE_TODO:
-            return state.filter((todo) => todo.id !== action.payload.id);
+            state = state.filter((todo) => todo.id !== action.payload.id);
+            setDataToLS("data", state);
+            return state;
 
         case EDIT_TODO_TITLE:
-            return state.map((todo) => {
+            state = state.map((todo) => {
                 if (todo.id === action.payload.id) {
                     if (
                         todo.title !== action.payload.title.trim() &&
@@ -62,8 +85,11 @@ const todoReducer = (
                 return todo;
             });
 
+            setDataToLS("data", state);
+            return state;
+
         case CHANGE_TODO_DATE:
-            return state.map((todo) => {
+            state = state.map((todo) => {
                 if (todo.id === action.payload.id) {
                     return {
                         ...todo,
@@ -73,8 +99,11 @@ const todoReducer = (
                 return todo;
             });
 
+            setDataToLS("data", state);
+            return state;
+
         case CHANGE_TODO_TIME:
-            return state.map((todo) => {
+            state = state.map((todo) => {
                 if (todo.id === action.payload.id) {
                     return {
                         ...todo,
@@ -83,6 +112,9 @@ const todoReducer = (
                 }
                 return todo;
             });
+
+            setDataToLS("data", state);
+            return state;
 
         case SORT_TODOS:
             const sortTodos = () => {
@@ -116,8 +148,10 @@ const todoReducer = (
         case ADD_NEW_TASK:
             const id = state.length === 0 ? 0 : state[state.length - 1].id + 1;
             action.payload.todo = { ...action.payload.todo, id: id };
-            return [...state, action.payload.todo];
+            state = [...state, action.payload.todo];
 
+            setDataToLS("data", state);
+            return state;
         default:
             return state;
     }
