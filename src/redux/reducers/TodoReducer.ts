@@ -100,15 +100,16 @@ const todoReducer = (
             return (state = sortTodos());
 
         case FILTER_TODOS:
-            state = initialState;
             const now = moment();
             let filteredTodos: Todo[] = [];
-            state.forEach((todo) => {
-                if (moment(todo.date).diff(now, action.payload.state) === 0) {
-                    filteredTodos = [...filteredTodos, todo];
+            filteredTodos = state.map((item) => {
+                if (moment(item.date).diff(now, action.payload.state) === 0) {
+                    item.isVisible = true;
+                } else {
+                    item.isVisible = false;
                 }
+                return item;
             });
-
             state = filteredTodos;
             return state;
 
