@@ -17,13 +17,14 @@ const Todos = lazy(() => import("./Todos"));
 
 interface TodosContainerProps {
     todos: Todo[];
+    isMobile: boolean;
 }
 
 const TodosContainer: FC<TodosContainerProps> = (props) => {
-    const { todos } = props;
+    const { todos, isMobile } = props;
+    const dispatch = useDispatch();
 
     //states
-    const [isMobile, setIsMobile] = useState<boolean>();
     const [isAsc, setIsAsc] = useState(false);
 
     //refs
@@ -34,26 +35,6 @@ const TodosContainer: FC<TodosContainerProps> = (props) => {
     const undoneTodos = todos.filter(
         (todo: Todo) => !todo.isDone && todo.isVisible
     );
-
-    const dispatch = useDispatch();
-
-    // handle isMobile
-    const handleIsMobile = () => {
-        if (window.innerWidth < 640) {
-            setIsMobile(true);
-        } else {
-            setIsMobile(false);
-        }
-    };
-    useEffect(() => {
-        handleIsMobile();
-        window.addEventListener("resize", handleIsMobile);
-        window.addEventListener("load", handleIsMobile);
-        return () => {
-            window.removeEventListener("resize", handleIsMobile);
-            window.removeEventListener("load", handleIsMobile);
-        };
-    }, []);
 
     // make array of titleRefs
     const handleAddRefsToTaskTitleRefs = (input: HTMLInputElement) => {
@@ -124,6 +105,7 @@ const TodosContainer: FC<TodosContainerProps> = (props) => {
             );
         }
     };
+
 
     return (
         <>

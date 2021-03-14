@@ -5,7 +5,6 @@ import { RootState } from "./redux/reducers/AllReducers";
 import { useDispatch, useSelector } from "react-redux";
 import { filterTodos } from "./redux/actions";
 import Loading from "./components/Loading";
-import Alert from "./components/Alert";
 
 const DoneTasksContainer = lazy(() => import("./components/routes/DoneTasks"));
 const TodosContainer = lazy(() => import("./components/routes/Todos"));
@@ -17,37 +16,36 @@ function App() {
 
     const dispatch = useDispatch();
 
-    // Alert
-    const alert = useSelector((state: RootState) => state.alert);
-    const [showAlert, setShowAlert] = useState(false);
-    const handleShowAlert = () => {
-        if (alert.message !== "") {
-            setShowAlert(true);
-            setTimeout(() => {
-                setShowAlert(false);
-            }, 3000);
+    // filter
+    const [selectedFilter, setSelectedFilter] = useState("");
+    const handleFilter: HandleFilter = (state) => {
+        if (selectedFilter !== state) {
+            setSelectedFilter(state);
+            dispatch(filterTodos(state));
+        }
+    };
+
+    // handle is mobile
+    const [isMobile, setIsMobile] = useState<boolean>(false);
+    const handleIsMobile = () => {
+        if (window.innerWidth < 640) {
+            setIsMobile(true);
+        } else {
+            setIsMobile(false);
         }
     };
 
     useEffect(() => {
-        handleShowAlert();
-
+        handleIsMobile();
+        window.addEventListener("resize", handleIsMobile);
+        window.addEventListener("load", handleIsMobile);
+        // cleanup
         return () => {
-            setShowAlert(false);
+            window.removeEventListener("resize", handleIsMobile);
+            window.removeEventListener("load", handleIsMobile);
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [alert]);
+    }, []);
 
-    const closeAlert = () => {
-        setShowAlert(false);
-    };
-
-    // filter
-    const [selectedFilter, setSelectedFilter] = useState("");
-    const handleFilter: HandleFilter = (state) => {
-        setSelectedFilter(state);
-        dispatch(filterTodos(state));
-    };
 
     return (
         <>
@@ -66,26 +64,23 @@ function App() {
                                 path="/"
                                 exact
                                 component={() => (
-                                    <TodosContainer todos={todos} />
+                                    <TodosContainer
+                                        todos={todos}
+                                        isMobile={isMobile}
+                                    />
                                 )}
                             />
                             <Route
                                 path="/donetasks"
                                 component={() => (
-                                    <DoneTasksContainer todos={todos} />
+                                    <DoneTasksContainer
+                                        todos={todos}
+                                        isMobile={isMobile}
+                                    />
                                 )}
                             />
                             <Route path="/*" component={() => <Error />} />
                         </Switch>
-
-                        {showAlert && (
-                            <Alert
-                                color={alert.color}
-                                message={alert.message}
-                                type={alert.type}
-                                closeAlert={closeAlert}
-                            />
-                        )}
                     </Suspense>
                 </div>
             </Router>

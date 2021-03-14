@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import { FaPencilAlt } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import "react-datepicker/dist/react-datepicker.css";
@@ -160,4 +160,4 @@ const MobileTodos: FC<TodosProps> = (props) => {
     );
 };
 
-export default MobileTodos;
+export default memo(MobileTodos);

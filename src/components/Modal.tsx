@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState } from "react";
+import React, { FC, memo, useRef, useState } from "react";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { CgPlayListCheck } from "react-icons/cg";
 import { BsCalendar } from "react-icons/bs";
@@ -192,4 +192,4 @@ const Modal: FC<ModalProps> = (props) => {
     );
 };
 
-export default Modal;
+export default memo(Modal);

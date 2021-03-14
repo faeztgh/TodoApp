@@ -133,8 +133,7 @@ const todoReducer = (
 
         case FILTER_TODOS:
             const now = moment();
-            let filteredTodos: Todo[] = [];
-            filteredTodos = state.map((item) => {
+            const filteredTodos = state.map((item) => {
                 if (moment(item.date).diff(now, action.payload.state) === 0) {
                     item.isVisible = true;
                 } else {
@@ -142,7 +141,10 @@ const todoReducer = (
                 }
                 return item;
             });
-            state = filteredTodos;
+            if (state !== filteredTodos) {
+                state = filteredTodos;
+            }
+
             return state;
 
         case ADD_NEW_TASK:

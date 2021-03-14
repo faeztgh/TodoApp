@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 
 interface FilterGroupButtonProps {
     handleFilter: HandleFilter;
@@ -45,4 +45,4 @@ const FilterGroupButton: FC<FilterGroupButtonProps> = (props) => {
     );
 };
 
-export default FilterGroupButton;
+export default memo(FilterGroupButton);

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import { FaRegBell } from "react-icons/fa";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
@@ -38,4 +38,4 @@ const Alert: FC<AlertProps> = (props) => {
     );
 };
 
-export default Alert;
+export default memo(Alert);
