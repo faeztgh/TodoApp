@@ -157,6 +157,7 @@ const Modal: FC<ModalProps> = (props) => {
 
                                 <div className="flex items-center justify-end p-6 border-t border-gray-300 border-solid rounded-b">
                                     <button
+                                        aria-label="close"
                                         className="modal-close-btn"
                                         type="button"
                                         style={{ transition: "all .15s ease" }}
@@ -165,6 +166,7 @@ const Modal: FC<ModalProps> = (props) => {
                                         Close
                                     </button>
                                     <button
+                                        aria-label="add task"
                                         className={`modal-addTask-btn ${
                                             taskTitleInput.trim() !== ""
                                                 ? ""

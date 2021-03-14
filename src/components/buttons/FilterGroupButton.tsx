@@ -16,28 +16,31 @@ const FilterGroupButton: FC<FilterGroupButtonProps> = (props) => {
             <div className="flex flex-wrap items-baseline justify-center">
                 <div className="flex m-2 text-gray-600">
                     <button
+                        aria-label="month"
                         onClick={() => handleFilter("month")}
                         className={`rounded-l-none filterGroup-btn ${
                             selectedFilter === "month" ? active : deActive
                         }`}
                     >
-                        <span className="flex leading-5">Month</span>
+                        Month
                     </button>
                     <button
+                        aria-label="week"
                         onClick={() => handleFilter("week")}
                         className={`filterGroup-btn border-l-0 border-r-0 rounded-l-none rounded-r-none ${
                             selectedFilter === "week" ? active : deActive
                         }`}
                     >
-                        <span className="flex leading-5">Week</span>
+                        Week
                     </button>
                     <button
+                        aria-label="day"
                         onClick={() => handleFilter("day")}
                         className={`filterGroup-btn rounded-r-none ${
                             selectedFilter === "day" ? active : deActive
                         }`}
                     >
-                        <span className="flex leading-5">Day</span>
+                        Day
                     </button>
                 </div>
             </div>

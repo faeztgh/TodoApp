@@ -96,6 +96,7 @@ const Todos: FC<TodosProps> = (props) => {
                                 </td>
                                 <td>
                                     <button
+                                        aria-label="status"
                                         className={`capitalize rounded-full px-3 mr-2 py-1.5 text-gray-50 whitespace-nowrap
                                            ${
                                                todo.isPaused
@@ -125,6 +126,7 @@ const Todos: FC<TodosProps> = (props) => {
                                 </td>
                                 <td className="flex justify-around">
                                     <button
+                                        aria-label="edit"
                                         className="text-cornFlowerBlue focus:border-transparent cornFlowerBlue_light focus:outline-none"
                                         onClick={() =>
                                             handleClickOnEdit(todo.title)
@@ -133,6 +135,7 @@ const Todos: FC<TodosProps> = (props) => {
                                         <FaPencilAlt size="1.2em" />
                                     </button>
                                     <button
+                                        aria-label="remove"
                                         className="text-carnationRed focus:border-transparent focus:outline-none"
                                         onClick={() =>
                                             handleRemoveTodo(todo.id)

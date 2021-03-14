@@ -39,6 +39,7 @@ const MobileTodos: FC<TodosProps> = (props) => {
         <>
             <div className="container">
                 <button
+                    aria-label="sort"
                     className="px-3 py-1.5 shadow-md text-gray-800 bg-gray-200 rounded"
                     onClick={sort}
                 >
@@ -106,6 +107,7 @@ const MobileTodos: FC<TodosProps> = (props) => {
                                     </td>
                                     <td className="p-2 border-b border-l ">
                                         <button
+                                            aria-label="status"
                                             className={`status-btn ${
                                                 todo.isPaused
                                                     ? "bg-webOrange hover:bg-webOrange_light"
@@ -134,6 +136,7 @@ const MobileTodos: FC<TodosProps> = (props) => {
                                     </td>
                                     <td className="flex h-full p-2 border-l justify-evenly ">
                                         <button
+                                            aria-label="edit"
                                             className="text-cornFlowerBlue focus:border-transparent focus:outline-none"
                                             onClick={() =>
                                                 handleClickOnEdit(todo.title)
@@ -142,6 +145,7 @@ const MobileTodos: FC<TodosProps> = (props) => {
                                             <FaPencilAlt size="1.2em" />
                                         </button>
                                         <button
+                                            aria-label="remove"
                                             className="text-carnationRed focus:border-transparent focus:outline-none"
                                             onClick={() =>
                                                 handleRemoveTodo(todo.id)

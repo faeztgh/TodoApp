@@ -15,6 +15,7 @@ const MobileDoneTasks: FC<MobileDoneTasksProps> = (props) => {
         <>
             <div className="container">
                 <button
+                    aria-label="sort"
                     className="px-3 py-1.5 shadow-md text-gray-800 bg-gray-200 rounded"
                     onClick={sort}
                 >
@@ -33,7 +34,7 @@ const MobileDoneTasks: FC<MobileDoneTasksProps> = (props) => {
                         )}
                     </span>
                 </button>
-                
+
                 {todos.map((todo) => {
                     return (
                         <table
@@ -55,7 +56,7 @@ const MobileDoneTasks: FC<MobileDoneTasksProps> = (props) => {
                                     </th>
                                 </tr>
                             </thead>
-                            
+
                             <tbody className="flex-1 bg-white sm:flex-none">
                                 <tr className="flex flex-col h-full flex-nowrap sm:table-row sm:mb-0">
                                     <td className="p-2 font-normal text-gray-400 border-b border-l">

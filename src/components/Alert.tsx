@@ -23,6 +23,7 @@ const Alert: FC<AlertProps> = (props) => {
                     <span>{message}</span>
                 </span>
                 <button
+                    aria-label="close"
                     className="inline-block mr-1 text-xl align-middle focus:border-transparent"
                     onClick={closeAlert}
                 >

@@ -10,6 +10,7 @@ const AddTaskButton: FC<AddTaskButtonProps> = (props) => {
     return (
         <>
             <button
+                aria-label="add task"
                 className="addTask-btn"
                 onClick={() => setShowModal(!showModal)}
             >
