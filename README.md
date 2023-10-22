@@ -1,4 +1,4 @@
-# Getting Started with Create React App [![Netlify Status](https://api.netlify.com/api/v1/badges/1b2e41a6-777b-4d6a-95e8-772588cd0b8a/deploy-status)](https://app.netlify.com/sites/faez-todoapp/deploys)
+# Getting Started with Create React App 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
