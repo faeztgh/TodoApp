@@ -55,7 +55,7 @@
         "@types/react-redux": "^7.1.16",
         "@types/react-router-dom": "^5.1.7",
         "autoprefixer": "^9.8.6",
-        "postcss": "^8.2.10",
+        "postcss": "^8.4.31",
         "react-scripts": "^4.0.3",
         "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3"
     }
